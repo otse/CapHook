@@ -1,3 +1,7 @@
+# Cap
+
+I love playing with shields, so I'm making this for whoever loves that too.
+
 # DawnHook
 
 Lua and asset hook for FarCry New Dawn.
