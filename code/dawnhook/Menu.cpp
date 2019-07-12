@@ -115,6 +115,8 @@ void Menu::FindScripts()
 	}
 }
 
+bool succeeded = true;
+
 void Menu::Draw()
 {
 	ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiSetCond_FirstUseEver);
@@ -130,11 +132,16 @@ void Menu::Draw()
 		{
 			auto scr = CScriptSystem::GetInstance();
 
-			if (!scr || !scr->ExecuteString(input_buffer, false))
+			succeeded = !(!scr || !scr->ExecuteString(input_buffer, false));
+
+			if (!succeeded)
 			{
 				printf("[DawnHook] : Failed to execute lua!\n");
 			}
 		}
+
+		if (!succeeded)
+			ImGui::Text("Failed to execute Lua!");
 	}
 
 	if (ImGui::AddTab("Script Manager"))
