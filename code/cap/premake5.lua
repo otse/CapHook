@@ -1,41 +1,32 @@
-project "DawnHook"
+project "Cap"
     language "C++"
-    kind "SharedLib"
-	targetextension ".dll"
+    kind "StaticLib"
     
     vpaths
     {
- 
+        ["Headers/*"] = { "**.hpp", "**.h" },
+        ["Sources/*"] = "**.cpp",
+        ["Resources/*"] = "**.rc",
         ["*"] = "premake5.lua"
-    }
-
+	}
+	
 	includedirs
-	{
-		"../cap",
+    {
+		"../dawnhook",
 		"../shared",
-		"./include",
 		--"../vendor/lua",
 		"../vendor/minhook",
 		"../vendor/imgui",
 		"../vendor/udis86",
 		"."
-	}
-
-	links
-	{
-		--"lua",
-		"cap",
-		"minhook",
-		"imgui",
-		"udis86",
-		"Shared"
-	}
+    }
 
     files
     {
         "premake5.lua",
+        "**.h",
+        "**.hpp",
         "**.cpp",
-        "**.hpp",        
-        "**.h",      
+        "**.rc",
         "**.c"
     }

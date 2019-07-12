@@ -15,6 +15,9 @@
 #include <Hooking.h>
 #include <MinHook.h>
 
+//Cap
+#include <Cap.h>
+
 bool IsGameGenuine()
 {
 	char *code = (char*)LoadLibraryW(L"uplay_r1_loader64.dll") + 0x3D727;
@@ -84,6 +87,10 @@ bool InitMod()
 	nomad::base_function::run_all();
 
 	g_Menu = new Menu;
+
+	// Cap
+	cap::Cap_();
+
 
 	return true;
 }

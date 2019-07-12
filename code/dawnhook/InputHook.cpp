@@ -16,6 +16,9 @@
 #include <dinput.h>
 #include <dinputd.h>
 
+// Cap
+#include <Cap.h>
+
 class CPlatformWindow
 {
 public:
@@ -125,6 +128,25 @@ static LRESULT DawnHook_ProcessInput(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 
 static LRESULT GameWndProc_Stub(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	// Cap
+	if (msg == WM_KEYDOWN && wParam == VK_DIVIDE)
+	{
+		cap::CapeActive_ = !cap::CapeActive_;
+
+		ImGuiIO& IO = ImGui::GetIO();
+
+		if (cap::CapeActive_)
+		{
+			GetCursorPos_O(&frozen);
+			IO.MouseDrawCursor = true;
+		}
+		else
+		{
+			SetCursorPos_O(frozen.x, frozen.y);
+			IO.MouseDrawCursor = false;
+		}
+	}
+
 	if (msg == WM_KEYDOWN && wParam == VK_F8)
 	{
 		g_MenuActive = !g_MenuActive;
@@ -147,7 +169,7 @@ static LRESULT GameWndProc_Stub(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 		}
 	}
 
-	if (g_MenuActive)
+	if (g_MenuActive || cap::CapeActive_)
 	{
 		DawnHook_ProcessInput(hwnd, msg, wParam, lParam);
 

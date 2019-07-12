@@ -15,6 +15,10 @@
 #include <imgui.h>
 #include <Menu.h>
 
+// Cap
+#include <Cap.h>
+
+
 struct D3D_Class
 {
     char padding[48];
@@ -58,6 +62,10 @@ static HRESULT D3D11Present_Wrap(int64_t* Device3D, int64_t* a2, int64_t* a3)
 
 	if (g_MenuActive)
 		g_Menu->Draw();
+
+	// Cap
+	if (cap::CapeActive_)
+		cap::cap_->Draw();
 
     // process render tasks
     ImGui::Render();
