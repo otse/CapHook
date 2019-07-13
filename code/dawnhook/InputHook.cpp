@@ -43,7 +43,7 @@ static WNDPROC GameWndProc;
 static void UpdateRawInput_Stub(void *self, float a2)
 {
 	// only update raw (dinput) if menu not visible
-	if (!g_MenuActive)
+	if (!g_MenuActive || cap::CapeActive_)
 		UpdateRawInput(self, a2);
 }
 
@@ -51,7 +51,7 @@ static tagPOINT frozen;
 
 static BOOL GetCursorPos_Stub(LPPOINT lpPoint)
 {
-	if (g_MenuActive)
+	if (g_MenuActive || cap::CapeActive_)
 	{
 		memcpy(lpPoint, &frozen, sizeof(tagPOINT));
 		return TRUE;
@@ -187,7 +187,7 @@ static LRESULT GameWndProc_Stub(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 
 BOOL SetCursorPos_Stub(int X, int Y)
 {
-	if (g_MenuActive)
+	if (g_MenuActive || cap::CapeActive_)
 	{
 		return TRUE;
 	}
@@ -197,7 +197,7 @@ BOOL SetCursorPos_Stub(int X, int Y)
 static void(*update)(void*);
 static void DoUpdate(char* k)
 {
-	if (!g_MenuActive)
+	if (!g_MenuActive || cap::CapeActive_)
 		update(k);
 	//else
 		//*(tagPOINT*)(k + 132) = frozen;

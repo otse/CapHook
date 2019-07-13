@@ -26,8 +26,7 @@ cap_t cap_ = nullptr;
 Cap::Cap()
 	: _luas(fsList_(L"caphook\\luas"))
 {
-	auto check = [](const std::wstring &path)
-	{
+	auto check = [](const std::wstring &path) {
 		auto abs = Utility::MakeAbsolutePathW(path);
 
 		if (GetFileAttributesW(abs.c_str()) == INVALID_FILE_ATTRIBUTES)
@@ -47,21 +46,40 @@ Cap::~Cap()
 void Cap::Key(WPARAM w)
 {
 	// http://www.kbdedit.com/manual/low_level_vk_list.html
+
+	auto &v = _luas->_dis;
+
+	auto has_lua = ([&](const std::string &x) {
+		bool found = std::find(v.begin(), v.end(), x) != v.end();
+		return found;
+	});
+
 	if (w == VK_NUMPAD5)
 	{
-		auto &v = _luas->_dis;
 		auto x = "spawn_shield.lua";
-		bool find = std::find(v.begin(), v.end(), x) != v.end();
 
-		if (!find)
+		if (!has_lua(x))
 			return;
 
-		std::puts("Load the shield lua");
+		std::puts("Spawn shield");
 
 		auto path = Utility::MakeAbsolutePathW(L"caphook\\luas\\spawn_shield.lua");
 
 		Lua::RunFile(path.c_str());
+	}
 
+	if (w == VK_NUMPAD8)
+	{
+		auto x = "pull_shield.lua";
+
+		if (!has_lua(x))
+			return;
+
+		std::puts("Pull shield");
+
+		auto path = Utility::MakeAbsolutePathW(L"caphook\\luas\\pull_shield.lua");
+
+		Lua::RunFile(path.c_str());
 	}
 }
 
@@ -81,12 +99,12 @@ void Cap::Draw()
 
 	ImGui::Text("Thanks for playing! CapHook is a fork of DawnHook. Press / to toggle menu.\n");
 
-	ImGui::BeginTabBar("Info#MyTabBar"); // what does this do
+	ImGui::BeginTabBar("#MyTabBar"); // what does this do
 	ImGui::DrawTabsBackground();
-	
-	if (ImGui::AddTab("Info"))
+
+	if (ImGui::AddTab("Info & Settings"))
 	{
-		std::string ver = "Version: 0.5";
+		std::string ver = "Version: 0.75%";
 		ImGui::Text(ver.c_str());
 
 		std::string num_lua = "Num lua files: " + std::to_string(_luas->_num);
@@ -94,6 +112,9 @@ void Cap::Draw()
 
 		std::string spawn_shield = "Spawn Shield: <Numpad 5>";
 		ImGui::Text(spawn_shield.c_str());
+
+		std::string spawn_shield = "Spawn Shield Delay: <Numpad 5>";
+		//ImGui::Label(spawn_shield.c_str());
 	}
 
 	if (ImGui::AddTab("Luas"))
