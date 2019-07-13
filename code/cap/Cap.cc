@@ -15,7 +15,8 @@
 
 namespace cap
 {
-bool CapActive_ = true;
+bool CapActive_ = false;
+bool StartupNoticeActive_ = true;
 
 cap_t Cap_()
 {
@@ -132,6 +133,10 @@ void Cap::Draw()
 	}
 
 	ImGui::EndTabBar();
+
+	//ID3D11ShaderResourceView* my_texture_view;
+	//device->CreateShaderResourceView(my_texture, &my_shader_resource_view_desc, &my_texture_view);
+	//ImGui::Image((void*)my_texture_view, ImVec2(512,512));
 	ImGui::End();
 }
 

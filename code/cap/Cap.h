@@ -4,7 +4,7 @@
 
 namespace cap
 {
-extern bool CapActive_;
+extern bool CapActive_, StartupNoticeActive_;
 
 class Cap;
 
@@ -33,4 +33,7 @@ public:
 typedef void CAPTEST;
 
 CAPTEST TestFindScripts();
+
+void StartupNotice();
+
 } // namespace cap

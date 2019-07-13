@@ -8,7 +8,7 @@
 
 namespace cap
 {
-bool ConsoleActive_ = true;
+bool ConsoleActive_ = false;
 
 console_t Console_()
 {
@@ -31,8 +31,8 @@ void Console::Log(const std::string &x)
 
 void Console::Draw()
 {
-	ImGui::SetWindowPos(ImVec2(600, 600));
-	ImGui::SetNextWindowSize(ImVec2(600, 200), ImGuiSetCond_FirstUseEver);
+	ImGui::SetWindowPos(ImVec2(800, 800));
+	ImGui::SetNextWindowSize(ImVec2(600, 400), ImGuiSetCond_FirstUseEver);
 
 	ImGui::Begin("ShieldMod Console", &ConsoleActive_, 0);
 
@@ -45,6 +45,9 @@ void Console::Draw()
 	{
 		ImGui::TextUnformatted(_deq[i].c_str());
 	}
+
+	auto y = ImGui::GetScrollMaxY();
+	ImGui::SetScrollY(y);
 
 	ImGui::End();
 }

@@ -71,6 +71,9 @@ static HRESULT D3D11Present_Wrap(int64_t* Device3D, int64_t* a2, int64_t* a3)
 	if (cap::ConsoleActive_)
 		cap::console_->Draw();
 
+	if (cap::StartupNoticeActive_)
+		cap::StartupNotice();
+
     // process render tasks
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
