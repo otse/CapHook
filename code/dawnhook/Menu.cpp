@@ -6,7 +6,6 @@
  * Author: Force67
  * Started: 2019-03-07
  */
-
 #include <Windows.h>
 #include <imgui.h>
 #include <imgui_tabs.h>
@@ -23,9 +22,16 @@
 
 static bool ScriptItemSelector(void* data, int idx, const char** out_text)
 {
-	const auto vec = (std::vector<std::string>*)data;
+	// Cap
+	// string to wstring
+	// https://stackoverflow.com/a/12097772/3414596
 
-	if (out_text) *out_text = vec->at(idx).c_str();
+	const auto vec = (std::vector<std::wstring>*)data;
+
+	std::wstring wide(vec->at(idx));
+	std::string str(wide.begin(), wide.end());
+
+	if (out_text) *out_text = str.c_str();
 
 	return true;
 }
@@ -102,7 +108,10 @@ void Menu::FindScripts()
 	// Cap
 	cap::TestFindScripts();
 
-	auto path = Utility::MakeAbsolutePathW(L"dawnhook\\scripts");
+	// Cap
+	found_scripts.clear();
+
+	auto path = Utility::MakeAbsolutePathW(L".\\dawnhook\\scripts");
 
 	WIN32_FIND_DATAW fd;
 	HANDLE handle = FindFirstFileW((path+L"\\*.lua").c_str(), &fd);
@@ -114,6 +123,8 @@ void Menu::FindScripts()
 			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 			{
 				found_scripts.push_back(path + L"\\" + std::wstring(fd.cFileName));
+
+				std::puts("Cap: found script");
 			}
 		}
 
@@ -121,6 +132,7 @@ void Menu::FindScripts()
 	}
 }
 
+// Cap
 bool succeeded = true;
 
 void Menu::Draw()
@@ -147,6 +159,7 @@ void Menu::Draw()
 			}
 		}
 
+		// Cap
 		if (!succeeded)
 			ImGui::Text("Failed to execute Lua!");
 	}

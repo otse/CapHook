@@ -27,6 +27,7 @@ Cap::~Cap()
 
 void Cap::Draw()
 {
+	ImGui::SetWindowPos(ImVec2(300, 300));
 	ImGui::SetNextWindowSize(ImVec2(600, 300), ImGuiSetCond_FirstUseEver);
 	ImGui::Begin("Captain America mod", &CapeActive_, 0);
 

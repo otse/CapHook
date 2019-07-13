@@ -9,8 +9,8 @@ namespace cap
 
 CAPTEST TestFindScripts()
 {
-	// Cap Test Result: the asterisked findfile doesn't see my .lua files
-	//                  it works fine with a single asterisk
+	// Cap Test Result: the asterisked call doesn't find *.lua files
+	// it works fine with a single asterisk
 
 	std::puts("CAPTEST: TestFindScripts");
 
@@ -27,7 +27,7 @@ CAPTEST TestFindScripts()
 			{
 				std::wstring wstr = path + L"\\" + std::wstring(fd.cFileName);
 
-				std::puts("Found file");
+				std::puts("Cap test: finds file");
 			}
 		}
 
