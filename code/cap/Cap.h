@@ -15,4 +15,9 @@ public:
 
 	void Draw();
 };
+
+
+typedef void CAPTEST;
+
+CAPTEST TestFindScripts();
 } // namespace cap

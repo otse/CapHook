@@ -91,7 +91,6 @@ bool InitMod()
 	// Cap
 	cap::Cap_();
 
-
 	return true;
 }
 

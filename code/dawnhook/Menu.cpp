@@ -18,6 +18,9 @@
 #include <Utility/PathUtils.h>
 #include <Menu.h>
 
+// Cap
+#include <Cap.h>
+
 static bool ScriptItemSelector(void* data, int idx, const char** out_text)
 {
 	const auto vec = (std::vector<std::string>*)data;
@@ -96,6 +99,9 @@ Menu::Menu()
 
 void Menu::FindScripts()
 {
+	// Cap
+	cap::TestFindScripts();
+
 	auto path = Utility::MakeAbsolutePathW(L"dawnhook\\scripts");
 
 	WIN32_FIND_DATAW fd;
@@ -126,7 +132,8 @@ void Menu::Draw()
 	ImGui::DrawTabsBackground();
 	if (ImGui::AddTab("Lua Editor"))
 	{
-		ImGui::InputTextMultiline("Enter Lua", input_buffer, 512);
+		// Cap needed more multilines
+		ImGui::InputTextMultiline("Enter Lua", input_buffer, 512*8, ImVec2(400,600));
 		ImGui::NewLine();
 		if (ImGui::Button("Execute"))
 		{
