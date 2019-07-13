@@ -4,10 +4,12 @@
 
 namespace cap
 {
+extern bool CapActive_;
+
 class Cap;
+
 typedef Cap *cap_t;
 
-extern bool CapeActive_;
 extern cap_t cap_;
 
 cap_t Cap_();
@@ -19,7 +21,7 @@ public:
 	~Cap();
 
 	fs_list_t const _luas;
-	
+
 	void Key(WPARAM);
 
 	/// Load our own game scripts

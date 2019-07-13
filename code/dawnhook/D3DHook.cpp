@@ -17,6 +17,7 @@
 
 // Cap
 #include <Cap.h>
+#include <Console.h>
 
 
 struct D3D_Class
@@ -64,8 +65,11 @@ static HRESULT D3D11Present_Wrap(int64_t* Device3D, int64_t* a2, int64_t* a3)
 		g_Menu->Draw();
 
 	// Cap
-	if (cap::CapeActive_)
+	if (cap::CapActive_)
 		cap::cap_->Draw();
+
+	if (cap::ConsoleActive_)
+		cap::console_->Draw();
 
     // process render tasks
     ImGui::Render();

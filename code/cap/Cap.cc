@@ -3,6 +3,7 @@
 #include <Windows.h>
 
 #include <Cap.h>
+#include <Console.h>
 //#include <Menu.h>
 
 #include <imgui.h>
@@ -14,7 +15,7 @@
 
 namespace cap
 {
-bool CapeActive_ = true;
+bool CapActive_ = true;
 
 cap_t Cap_()
 {
@@ -36,6 +37,10 @@ Cap::Cap()
 	check(L"caphook");
 	check(L"caphook\\luas");
 
+	Console_();
+
+	CAPCONSOLELOG("starting");
+
 	LoadLuas();
 }
 
@@ -54,33 +59,32 @@ void Cap::Key(WPARAM w)
 		return found;
 	});
 
-	if (w == VK_NUMPAD5)
+	if (w == VK_MULTIPLY) // Numpad *
 	{
-		auto x = "spawn_shield.lua";
-
-		if (!has_lua(x))
-			return;
-
-		std::puts("Spawn shield");
-
-		auto path = Utility::MakeAbsolutePathW(L"caphook\\luas\\spawn_shield.lua");
-
-		Lua::RunFile(path.c_str());
+		ConsoleActive_ = !ConsoleActive_;
 	}
+
+#define SCRIPTMAC(x)                                                          \
+	{                                                                         \
+		if (!has_lua(x ".lua"))                                               \
+			return;                                                           \
+                                                                              \
+		CAPCONSOLELOG("Cap Lua " x);                                          \
+                                                                              \
+		auto path = Utility::MakeAbsolutePathW(L"caphook\\luas\\" x L".lua"); \
+                                                                              \
+		bool result = Lua::RunFile(path.c_str());                             \
+		if (result)                                                           \
+			CAPCONSOLELOG("Cap Lua " x " error");                             \
+	}
+
+	if (w == VK_NUMPAD5)
+
+		SCRIPTMAC("spawn_shield");
 
 	if (w == VK_NUMPAD8)
-	{
-		auto x = "pull_shield.lua";
 
-		if (!has_lua(x))
-			return;
-
-		std::puts("Pull shield");
-
-		auto path = Utility::MakeAbsolutePathW(L"caphook\\luas\\pull_shield.lua");
-
-		Lua::RunFile(path.c_str());
-	}
+		SCRIPTMAC("pull_shield");
 }
 
 /// Load our own game scripts
@@ -95,7 +99,7 @@ void Cap::Draw()
 {
 	ImGui::SetWindowPos(ImVec2(600, 300));
 	ImGui::SetNextWindowSize(ImVec2(600, 300), ImGuiSetCond_FirstUseEver);
-	ImGui::Begin("Captain America mod", &CapeActive_, 0);
+	ImGui::Begin("Captain America mod", &CapActive_, 0);
 
 	ImGui::Text("Thanks for playing! CapHook is a fork of DawnHook. Press / to toggle menu.\n");
 
@@ -113,7 +117,7 @@ void Cap::Draw()
 		std::string spawn_shield = "Spawn Shield: <Numpad 5>";
 		ImGui::Text(spawn_shield.c_str());
 
-		std::string spawn_shield = "Spawn Shield Delay: <Numpad 5>";
+		//std::string spawn_shield = "Spawn Shield Delay: ";
 		//ImGui::Label(spawn_shield.c_str());
 	}
 
