@@ -129,6 +129,10 @@ static LRESULT DawnHook_ProcessInput(HWND hwnd, UINT msg, WPARAM wParam, LPARAM 
 static LRESULT GameWndProc_Stub(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	// Cap
+	// Todo, nullcheck cap_ ?
+	if (msg == WM_KEYDOWN)
+		cap::cap_->Key(wParam);
+
 	if (msg == WM_KEYDOWN && wParam == VK_DIVIDE)
 	{
 		cap::CapeActive_ = !cap::CapeActive_;

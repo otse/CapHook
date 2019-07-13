@@ -20,6 +20,9 @@ public:
 
 	fs_list_t const _luas;
 	
+	void Key(WPARAM);
+
+	/// Load our own game scripts
 	void LoadLuas();
 
 	void Draw();

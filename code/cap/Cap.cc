@@ -8,6 +8,8 @@
 #include <imgui.h>
 #include <imgui_tabs.h>
 
+#include <ScriptSystem.h>
+
 #include <Utility/PathUtils.h>
 
 namespace cap
@@ -42,6 +44,27 @@ Cap::~Cap()
 {
 }
 
+void Cap::Key(WPARAM w)
+{
+	// http://www.kbdedit.com/manual/low_level_vk_list.html
+	if (w == VK_NUMPAD5)
+	{
+		auto &v = _luas->_dis;
+		auto x = "spawn_shield.lua";
+		bool find = std::find(v.begin(), v.end(), x) != v.end();
+
+		if (!find)
+			return;
+
+		std::puts("Load the shield lua");
+
+		auto path = Utility::MakeAbsolutePathW(L"caphook\\luas\\spawn_shield.lua");
+
+		Lua::RunFile(path.c_str());
+
+	}
+}
+
 /// Load our own game scripts
 void Cap::LoadLuas()
 {
@@ -68,11 +91,14 @@ void Cap::Draw()
 
 		std::string num_lua = "Num lua files: " + std::to_string(_luas->_num);
 		ImGui::Text(num_lua.c_str());
+
+		std::string spawn_shield = "Spawn Shield: <Numpad 5>";
+		ImGui::Text(spawn_shield.c_str());
 	}
 
 	if (ImGui::AddTab("Luas"))
 	{
-		if (ImGui::Button("Reload from disk"))
+		if (ImGui::Button("Reload luas"))
 		{
 			LoadLuas();
 		}
