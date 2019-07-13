@@ -31,7 +31,10 @@ static bool ScriptItemSelector(void* data, int idx, const char** out_text)
 	std::wstring wide(vec->at(idx));
 	std::string str(wide.begin(), wide.end());
 
-	if (out_text) *out_text = str.c_str();
+	// leak and possible crash here
+
+	if (out_text)
+		*out_text = str.c_str();
 
 	return true;
 }
@@ -138,7 +141,7 @@ bool succeeded = true;
 void Menu::Draw()
 {
 	ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiSetCond_FirstUseEver);
-	ImGui::Begin(FXNAME " 1.0 by Force67", &g_MenuActive, 0);
+	ImGui::Begin("DawnHook 1.0 by Force67", &g_MenuActive, 0);
 
 	ImGui::BeginTabBar("Lua#left_tabs_bar");
 	ImGui::DrawTabsBackground();

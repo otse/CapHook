@@ -27,7 +27,7 @@ CAPTEST TestFindScripts()
 			{
 				std::wstring wstr = path + L"\\" + std::wstring(fd.cFileName);
 
-				std::puts("Cap test: finds file");
+				//std::puts("Cap test: finds file");
 			}
 		}
 
