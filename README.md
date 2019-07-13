@@ -4,7 +4,7 @@ I love playing with shields, so I'm making this for whoever loves that too.
 
 Spawn a ballistic shield with numpad 5. Make sure to hit Num Lock first, or it won't work!
 
-![Shield mod](https://github.com/otse/CapHook/blob/master/banner.png)
+<img src="https://github.com/otse/CapHook/blob/master/banner.png" width="464">
 
 # DawnHook
 
