@@ -96,21 +96,29 @@ void CAPDRAWBANNER()
 
 	const float w = 900.f;
 	const float ha = w / 2.f;
-	const float shift = 1.f / 60.f * 300.f;
+
+	const float shift = 1.f / 60.f * 120.f;
 
 	if (!use)
 	{
 		int i = 0;
-		for (; i < num_banners-1; i++)
+		for (; i < num_banners; i++)
 		{
 			float b = i * w;
 			if (x < b - ha || x > b + ha)
+				// 455 < 450 || 455 > 900 + 450
 				continue;
-			if (x > b)
+			if (x < b) {
 				x += shift;
-			else
+				if (x > b)
+					x = b;
+			}
+			else {
 				x -= shift;
-			//if (x < b || x > e)
+				if (x < b)
+					x = b;
+			}
+			//if (x < b || x > b)
 				//x = b;
 		}
 		std::clamp(x, 0.f, max);
