@@ -67,18 +67,18 @@ void Cap::Key(WPARAM w)
 		ConsoleActive_ = !ConsoleActive_;
 	}
 
-#define SCRIPTMAC(x)                                                          \
-	{                                                                         \
-		if (!HasLua(x ".lua"))                                                \
-			return;                                                           \
-                                                                              \
-		CAPCONSOLELOG("Cap Lua " x);                                          \
-                                                                              \
-		auto path = Utility::MakeAbsolutePathW(L"caphook\\luas\\" x L".lua"); \
-                                                                              \
-		bool result = Lua::RunFile(path.c_str());                             \
-		if (result)                                                           \
-			CAPCONSOLELOG("Cap Lua " x " error");                             \
+#define SCRIPTMAC(x)                                                            \
+	{                                                                           \
+		if (!HasLua(x ".lua"))                                                  \
+			return;                                                             \
+                                                                                \
+		CAPCONSOLELOG("run " x);                                                \
+                                                                                \
+		auto path = Utility::MakeAbsolutePathW(L"shieldmod\\luas\\" x L".lua"); \
+                                                                                \
+		bool result = Lua::RunFile(path.c_str());                               \
+		if (result)                                                             \
+			CAPCONSOLELOG(x " error");                                          \
 	}
 
 	if (w == VK_NUMPAD5)
@@ -102,10 +102,10 @@ bool upload = false;
 
 void Cap::Draw()
 {
-	if (!upload) {
+	/*if (!upload) {
 		CAPUPLOADBANNER();
 		upload = true;
-	}
+	}*/
 
 	CAPDRAWBANNER();
 
@@ -146,7 +146,7 @@ void Cap::Draw()
 
 		if (ImGui::Button("Toggle ShieldMod Console"))
 		{
-			ConsoleActive_ = ! ConsoleActive_;
+			ConsoleActive_ = !ConsoleActive_;
 		}
 	}
 

@@ -4,11 +4,13 @@
 
 namespace cap
 {
+	extern bool ChrisOrSebastian;
+
 	extern ID3D11ShaderResourceView* TextureView_;
 	extern ID3D11Texture2D *texture2d_;
 
 	void CAPUPLOADBANNER();
-	
+
 	void CAPDRAWBANNER();
 	
 	void CAPSTOREVARS(

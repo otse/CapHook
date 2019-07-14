@@ -55,6 +55,7 @@ static bool Initialize(IDXGISwapChain* _SwapChain)
 
 	// Cap banner
 	cap::CAPSTOREVARS(_SwapChain, d3dDevice, d3dContext, DX11RenderTargetView);
+	cap::CAPUPLOADBANNER();
 
     return ImGui_ImplDX11_Init(sd.OutputWindow, d3dDevice, d3dContext);
 }

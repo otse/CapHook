@@ -16,6 +16,7 @@
 
 namespace cap
 {
+bool ChrisOrSebastian = false;
 
 ID3D11ShaderResourceView *TextureView_ = NULL;
 
@@ -51,32 +52,53 @@ void CAPDRAWBANNER()
 
 	ImGuiIO &io = ImGui::GetIO();
 
+	//ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, ImVec2(0, 0));
+
 	ImGui::SetNextWindowBgAlpha(0.0f);
 
-	ImVec2 window_pos = ImVec2(io.DisplaySize.x - 80, 80);
+	ImVec2 window_pos = ImVec2(io.DisplaySize.x - 50, 50);
 	ImVec2 window_pos_pivot = ImVec2(1.0f, 0.0f);
 	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
 	//ImGui::SetNextWindowSize(ImVec2(700, 150));
 
 	ImGui::Begin("Banner", &banner, flags);
-	ImGui::Image((void *)TextureView_, ImVec2(928, 523));
+	ImGui::Image((void *)TextureView_, ImVec2(900, 500));
 	ImGui::End();
+
+	//ImGui::PopStyleVar(1);
 }
 
 void CAPUPLOADBANNER()
 {
-	int width = 928;
-	int height = 523;
+	const wchar_t *swap = L"shieldmod\\chris or seb";
+
+	auto chris_or_seb = Utility::MakeAbsolutePathW(swap).c_str();
+	
+	if (INVALID_FILE_ATTRIBUTES != GetFileAttributesW(chris_or_seb))
+	{
+		ChrisOrSebastian = true;
+		DeleteFileW(chris_or_seb);
+	}
+	else
+	{
+		ChrisOrSebastian = false;
+		CreateFileW(chris_or_seb, GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
+	}
+
+	int width = 900;
+	int height = 500;
 	//int width = 512;
 	//int height = 512;
 
 	auto path = Utility::MakeAbsolutePathW(L"shieldmod\\");
 
-	auto pink_captain_america = (path + L"pink captain america").c_str();
+	auto pink = ChrisOrSebastian ? L"pink captain america" : L"pink winter soldier";
+	
+	auto banner = (path + pink).c_str();
 
 	// F
-	FILE* fh = nullptr;
-	_wfopen_s(&fh, pink_captain_america, L"rb");
+	FILE *fh = nullptr;
+	_wfopen_s(&fh, banner, L"rb");
 
 	fseek(fh, 0, SEEK_END);
 
@@ -93,10 +115,10 @@ void CAPUPLOADBANNER()
 	unsigned char *pixels = data;
 
 	int h = 0;
-	for (; h < height; h ++)
+	for (; h < height; h++)
 	{
 		int w = 0;
-		for (; w < width; w ++)
+		for (; w < width; w++)
 		{
 			//pixels += data.;
 		}
@@ -121,7 +143,8 @@ void CAPUPLOADBANNER()
 
 	HRESULT hr = vars.device->CreateTexture2D(&desc, &subResource, &pTexture);
 
-	if (FAILED(hr)) {
+	if (FAILED(hr))
+	{
 
 		std::cout << "capuploadbanner texture2d hresult " << std::hex << hr << std::endl;
 
@@ -135,10 +158,11 @@ void CAPUPLOADBANNER()
 	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = desc.MipLevels;
 	srvDesc.Texture2D.MostDetailedMip = 0;
-	
+
 	hr = vars.device->CreateShaderResourceView(pTexture, &srvDesc, &TextureView_);
 
-	if (FAILED(hr)) {
+	if (FAILED(hr))
+	{
 
 		std::cout << "capuploadbanner textureview hresult " << std::hex << hr << std::endl;
 

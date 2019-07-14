@@ -5,7 +5,7 @@ var PNG = require('png-js');
 
 function go() {
 
-	PNG.decode('../../banner.png', function(pixels) {
+	PNG.decode('../../banner_ws.png', function(pixels) {
 	//PNG.decode('512.png', function(pixels) {
 
 		console.log('woo');
@@ -19,7 +19,7 @@ function go() {
 			binary.writeUInt8(pixel, i);
 		}
 
-		fs.writeFile(`./pink captain america`, binary, ()=>{});
+		fs.writeFile(`./pink winter soldier`, binary, ()=>{});
 	});
 
 
