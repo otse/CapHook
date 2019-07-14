@@ -31,14 +31,28 @@ void Console::Log(const std::string &x)
 
 void Console::Draw()
 {
-	ImGui::SetWindowPos(ImVec2(800, 800));
-	ImGui::SetNextWindowSize(ImVec2(600, 400), ImGuiSetCond_FirstUseEver);
+	ImGuiIO &io = ImGui::GetIO();
 
-	ImGui::Begin("ShieldMod Console", &ConsoleActive_, 0);
+	ImVec2 window_pos = ImVec2(10, io.DisplaySize.y - 10);
+	ImVec2 window_pos_pivot = ImVec2(0.0f, 1.0f);
+	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
+	ImGui::SetNextWindowSize(ImVec2(700, 150));
 
-	ImGui::Text("Gayo");
+	auto flags = ImGuiWindowFlags_NoMove |
+				 ImGuiWindowFlags_NoTitleBar |
+				 ImGuiWindowFlags_NoResize |
+				 //ImGuiWindowFlags_NoSavedSettings |
+				 ImGuiWindowFlags_NoFocusOnAppearing |
+				 ImGuiWindowFlags_NoNav;
+
+	ImGui::Begin("ShieldMod Console", &ConsoleActive_, flags);
+
+	ImGui::Text("ShieldMod Console");
 
 	ImGui::Separator();
+	ImGui::Separator();
+
+	ImGui::BeginChild("scrolling", ImVec2(0,0));
 
 	size_t i = 0;
 	for (; i < _deq.size(); i++)
@@ -48,6 +62,8 @@ void Console::Draw()
 
 	auto y = ImGui::GetScrollMaxY();
 	ImGui::SetScrollY(y);
+
+	ImGui::EndChild();
 
 	ImGui::End();
 }

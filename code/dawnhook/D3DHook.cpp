@@ -16,8 +16,9 @@
 #include <Menu.h>
 
 // Cap
-#include <Cap.h>
-#include <Console.h>
+#include <cap/Cap.h>
+#include <cap/Banner.h>
+#include <cap/Console.h>
 
 
 struct D3D_Class
@@ -52,6 +53,9 @@ static bool Initialize(IDXGISwapChain* _SwapChain)
     d3dContext->OMSetRenderTargets(1, &DX11RenderTargetView, nullptr);
     pBackBuffer->Release();
 
+	// Cap banner
+	cap::CAPSTOREVARS(_SwapChain, d3dDevice, d3dContext, DX11RenderTargetView);
+
     return ImGui_ImplDX11_Init(sd.OutputWindow, d3dDevice, d3dContext);
 }
 
@@ -64,7 +68,7 @@ static HRESULT D3D11Present_Wrap(int64_t* Device3D, int64_t* a2, int64_t* a3)
 	if (g_MenuActive)
 		g_Menu->Draw();
 
-	// Cap
+	// Caps
 	if (cap::CapActive_)
 		cap::cap_->Draw();
 

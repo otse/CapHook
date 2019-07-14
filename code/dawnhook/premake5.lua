@@ -11,7 +11,7 @@ project "DawnHook"
 
 	includedirs
 	{
-		"../cap",
+		"../",
 		"../shared",
 		"./include",
 		--"../vendor/lua",

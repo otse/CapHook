@@ -18,7 +18,7 @@
 #include <Menu.h>
 
 // Cap
-#include <Cap.h>
+#include <cap/Cap.h>
 
 static bool ScriptItemSelector(void* data, int idx, const char** out_text)
 {
@@ -109,15 +109,13 @@ Menu::Menu()
 void Menu::FindScripts()
 {
 	// Cap
-	cap::TestFindScripts();
-
-	// Cap
+	//cap::TestFindScripts();
 	found_scripts.clear();
 
 	auto path = Utility::MakeAbsolutePathW(L".\\dawnhook\\scripts");
 
 	WIN32_FIND_DATAW fd;
-	HANDLE handle = FindFirstFileW((path+L"\\*.lua").c_str(), &fd);
+	HANDLE handle = FindFirstFileW((path + L"\\*.lua").c_str(), &fd);
 
 	if (handle != INVALID_HANDLE_VALUE)
 	{
@@ -180,7 +178,12 @@ void Menu::Draw()
 		}
 
 		static int current_item = 0;
-		if (ImGui::ListBox("Load single\nscript", &current_item, ScriptItemSelector, &found_scripts, (int)found_scripts.size()))
+		if (ImGui::ListBox(
+			"Load single\nscript",
+			&current_item,
+			ScriptItemSelector,
+			&found_scripts,
+			(int)found_scripts.size()))
 		{
 			auto dir = (Utility::MakeAbsolutePathW(L"dawnhook\\scripts")
 				+ found_scripts[current_item]).

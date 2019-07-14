@@ -2,8 +2,10 @@
 
 #include <Windows.h>
 
-#include <Cap.h>
-#include <Console.h>
+#include "Cap.h"
+#include "Banner.h"
+#include "Console.h"
+
 //#include <Menu.h>
 
 #include <imgui.h>
@@ -26,7 +28,7 @@ cap_t Cap_()
 cap_t cap_ = nullptr;
 
 Cap::Cap()
-	: _luas(fsList_(L"caphook\\luas"))
+	: _luas(fsList_(L"shieldmod\\luas"))
 {
 	auto check = [](const std::wstring &path) {
 		auto abs = Utility::MakeAbsolutePathW(path);
@@ -35,12 +37,12 @@ Cap::Cap()
 			CreateDirectoryW(abs.c_str(), nullptr);
 	};
 
-	check(L"caphook");
-	check(L"caphook\\luas");
+	check(L"shieldmod");
+	check(L"shieldmod\\luas");
 
 	Console_();
 
-	CAPCONSOLELOG("starting");
+	CAPCONSOLELOG("Starting");
 
 	LoadLuas();
 }
@@ -55,19 +57,19 @@ void Cap::Key(WPARAM w)
 
 	auto &v = _luas->_dis;
 
-	auto has_lua = ([&](const std::string &x) {
+	auto HasLua = ([&](const std::string &x) {
 		bool found = std::find(v.begin(), v.end(), x) != v.end();
 		return found;
 	});
 
-	if (w == VK_MULTIPLY) // Numpad *
+	if (w == VK_MULTIPLY)
 	{
 		ConsoleActive_ = !ConsoleActive_;
 	}
 
 #define SCRIPTMAC(x)                                                          \
 	{                                                                         \
-		if (!has_lua(x ".lua"))                                               \
+		if (!HasLua(x ".lua"))                                                \
 			return;                                                           \
                                                                               \
 		CAPCONSOLELOG("Cap Lua " x);                                          \
@@ -96,16 +98,30 @@ void Cap::LoadLuas()
 	_luas->Reload();
 }
 
+bool upload = false;
+
 void Cap::Draw()
 {
+	if (!upload) {
+		CAPUPLOADBANNER();
+		upload = true;
+	}
+
+	CAPDRAWBANNER();
+
 	ImGui::SetWindowPos(ImVec2(600, 300));
 	ImGui::SetNextWindowSize(ImVec2(600, 300), ImGuiSetCond_FirstUseEver);
-	ImGui::Begin("Captain America mod", &CapActive_, 0);
+	ImGui::Begin("ShieldMod for ND", &CapActive_, 0);
 
-	ImGui::Text("Thanks for playing! CapHook is a fork of DawnHook. Press / to toggle menu.\n");
+	///ImGui::Text("Thanks for playing! ShieldMod is a fork of DawnHook. Press / to toggle menu.\n");
 
 	ImGui::BeginTabBar("#MyTabBar"); // what does this do
 	ImGui::DrawTabsBackground();
+
+	if (ImGui::AddTab("Combat Stance"))
+	{
+		ImGui::TextColored(ImVec4(1, 0, 1, 1), "Choose your stance here.");
+	}
 
 	if (ImGui::AddTab("Info & Settings"))
 	{
@@ -120,6 +136,18 @@ void Cap::Draw()
 
 		//std::string spawn_shield = "Spawn Shield Delay: ";
 		//ImGui::Label(spawn_shield.c_str());
+
+		if (ImGui::Button("Upload Banner Texture"))
+		{
+			CAPCONSOLELOG("Uploading banner");
+
+			CAPUPLOADBANNER();
+		}
+
+		if (ImGui::Button("Toggle ShieldMod Console"))
+		{
+			ConsoleActive_ = ! ConsoleActive_;
+		}
 	}
 
 	if (ImGui::AddTab("Luas"))
