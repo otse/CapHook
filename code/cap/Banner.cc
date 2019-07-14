@@ -53,7 +53,7 @@ void CAPDRAWBANNER()
 
 	ImGui::SetNextWindowBgAlpha(0.0f);
 
-	ImVec2 window_pos = ImVec2(io.DisplaySize.x - 100, 100);
+	ImVec2 window_pos = ImVec2(io.DisplaySize.x - 80, 80);
 	ImVec2 window_pos_pivot = ImVec2(1.0f, 0.0f);
 	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
 	//ImGui::SetNextWindowSize(ImVec2(700, 150));
