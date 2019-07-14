@@ -59,6 +59,9 @@ void CAPDRAWBANNER()
 	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
 
 	// The Window
+
+	ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(255, 255, 255, 0));
+
 	ImGui::Begin("Banner", &window, flags);
 
 	// The Banners
@@ -88,16 +91,33 @@ void CAPDRAWBANNER()
 
 	static float x = 0;
 
-	ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, 50.f);
+	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(5.f,12.f));
+	ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, 80.f);
 
-	bool use = ImGui::SliderFloat("Scroll", &x, 0.0f, max);
+	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(255, 255, 255, 0));
+	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(255,255,255,0));
+	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(255, 255, 255, 0));
 
-	ImGui::PopStyleVar(1);
+	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(100, 0, 100, 255));
+	ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(70, 70, 70, 255));
+
+	ImGui::PushItemWidth(900);
+
+	bool use = ImGui::SliderFloat("", &x, 0.0f, max);
+
+	ImGui::PopItemWidth();
+
+	ImGui::PopStyleColor(5);
+	ImGui::PopStyleVar(2);
 
 	const float w = 900.f;
 	const float ha = w / 2.f;
 
-	const float shift = 1.f / 60.f * 120.f;
+	const float shift = 1.f / 60.f * 400.f;
+
+	/*auto EaseInOutQuad = ([](float t) {
+		return t < 0.5 ? 2 * t * t : t * (4 - 2 * t) - 1;
+	});*/
 
 	if (!use)
 	{
@@ -106,15 +126,17 @@ void CAPDRAWBANNER()
 		{
 			float b = i * w;
 			if (x < b - ha || x > b + ha)
-				// 455 < 450 || 455 > 900 + 450
 				continue;
+			float force = shift;
 			if (x < b) {
-				x += shift;
+				//force += (x - b) / 100.f;
+				x += force;
 				if (x > b)
 					x = b;
 			}
 			else {
-				x -= shift;
+				//force += (x - b) / 100.f;
+				x -= force;
 				if (x < b)
 					x = b;
 			}
@@ -155,6 +177,8 @@ void CAPDRAWBANNER()
 	}*/
 
 	ImGui::End();
+
+	ImGui::PopStyleColor(1);
 
 	//ImGui::PopStyleVar(1);
 }
