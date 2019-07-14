@@ -141,7 +141,9 @@ void Cap::Draw()
 		{
 			CAPCONSOLELOG("Uploading banner");
 
-			CAPUPLOADBANNER();
+			cap::CAPUPLOADBANNER(L"pink captain america");
+			cap::CAPUPLOADBANNER(L"pink winter soldier");
+			cap::CAPUPLOADBANNER(L"pink winter soldier 2");
 		}
 
 		if (ImGui::Button("Toggle ShieldMod Console"))

@@ -55,7 +55,9 @@ static bool Initialize(IDXGISwapChain* _SwapChain)
 
 	// Cap banner
 	cap::CAPSTOREVARS(_SwapChain, d3dDevice, d3dContext, DX11RenderTargetView);
-	cap::CAPUPLOADBANNER();
+	cap::CAPUPLOADBANNER(L"pink captain america");
+	cap::CAPUPLOADBANNER(L"pink winter soldier");
+	cap::CAPUPLOADBANNER(L"pink winter soldier 2");
 
     return ImGui_ImplDX11_Init(sd.OutputWindow, d3dDevice, d3dContext);
 }

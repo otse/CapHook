@@ -2,14 +2,20 @@
 
 #include <d3d11.h>
 
+#include <map>
+
 namespace cap
 {
 	extern bool ChrisOrSebastian;
 
-	extern ID3D11ShaderResourceView* TextureView_;
-	extern ID3D11Texture2D *texture2d_;
+	struct Banner
+	{
+		ID3D11Texture2D *texture;
+		ID3D11ShaderResourceView* view;
+	};
+	extern std::map<const std::wstring, Banner> banners_;
 
-	void CAPUPLOADBANNER();
+	void CAPUPLOADBANNER(const wchar_t *);
 
 	void CAPDRAWBANNER();
 	

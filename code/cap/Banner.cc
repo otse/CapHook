@@ -7,6 +7,7 @@
 #include <d3d11.h>
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 #include <imgui.h>
 
@@ -17,11 +18,6 @@
 namespace cap
 {
 bool ChrisOrSebastian = false;
-
-ID3D11ShaderResourceView *TextureView_ = NULL;
-
-ID3D11Texture2D *pTexture = NULL;
-//ID3D11Texture2D *pTexture1 = NULL;
 
 CAPVARS vars;
 
@@ -41,13 +37,15 @@ void CAPSTOREVARS(
 
 void CAPDRAWBANNER()
 {
-	static bool banner = true;
+	static bool window = true;
 
 	auto flags = ImGuiWindowFlags_NoMove |
 				 ImGuiWindowFlags_NoTitleBar |
 				 ImGuiWindowFlags_AlwaysAutoResize |
 				 ImGuiWindowFlags_NoSavedSettings |
 				 ImGuiWindowFlags_NoFocusOnAppearing |
+				 ImGuiWindowFlags_NoResize |
+				 ImGuiWindowFlags_NoScrollbar |
 				 ImGuiWindowFlags_NoNav;
 
 	ImGuiIO &io = ImGui::GetIO();
@@ -59,21 +57,107 @@ void CAPDRAWBANNER()
 	ImVec2 window_pos = ImVec2(io.DisplaySize.x - 50, 50);
 	ImVec2 window_pos_pivot = ImVec2(1.0f, 0.0f);
 	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
-	//ImGui::SetNextWindowSize(ImVec2(700, 150));
 
-	ImGui::Begin("Banner", &banner, flags);
-	ImGui::Image((void *)TextureView_, ImVec2(900, 500));
+	// The Window
+	ImGui::Begin("Banner", &window, flags);
+
+	// The Banners
+	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+	ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+
+	ImGui::BeginChild("Banners", ImVec2(900, 500));
+
+	size_t num_banners = banners_.size();
+
+	//ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, 20.f);
+
+	for (auto &pair : banners_)
+	{
+		Banner &banner = pair.second;
+		ImGui::Image((void *)banner.view, ImVec2(900, 500)); ImGui::SameLine();
+	}
+
+	float scroll_x = ImGui::GetScrollX();
+	float scroll_max_x = ImGui::GetScrollMaxX();
+
+	ImGui::PopStyleVar(2);
+
+	ImGui::EndChild();
+	
+	float max = 900.0f * (num_banners - 1);
+
+	static float x = 0;
+
+	ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, 50.f);
+
+	bool use = ImGui::SliderFloat("Scroll", &x, 0.0f, max);
+
+	ImGui::PopStyleVar(1);
+
+	const float w = 900.f;
+	const float ha = w / 2.f;
+	const float shift = 1.f / 60.f * 300.f;
+
+	if (!use)
+	{
+		int i = 0;
+		for (; i < num_banners-1; i++)
+		{
+			float b = i * w;
+			if (x < b - ha || x > b + ha)
+				continue;
+			if (x > b)
+				x += shift;
+			else
+				x -= shift;
+			//if (x < b || x > e)
+				//x = b;
+		}
+		std::clamp(x, 0.f, max);
+	}
+
+	// Go back to the Hulk
+	ImGui::BeginChild("Banners");
+	ImGui::SetScrollX((int)x);
+	ImGui::EndChild();
+
+	//ImGui::Separator();
+
+	//ImGui::BeginChild("Radios");
+
+	//ImGui::Columns(2);
+
+	//ImGui::NextColumn();
+	//ImGui::NextColumn();
+
+	/*static int e = 0;
+	ImGui::RadioButton("#a", &e, 0); ImGui::SameLine();
+	ImGui::RadioButton("#b", &e, 1); ImGui::SameLine();
+	ImGui::RadioButton("#c", &e, 2); ImGui::SameLine();
+	ImGui::RadioButton("#d", &e, 3);
+
+	//ImGui::EndChild();
+
+	switch(e)
+	{
+		case 0: which = L"pink winter soldier"; break;
+		case 1: which = L"pink captain america"; break;
+		default: which = L"pink captain america";
+		//case 2: which = L"pink winter soldier"; break;
+	}*/
+
 	ImGui::End();
 
 	//ImGui::PopStyleVar(1);
 }
 
-void CAPUPLOADBANNER()
+/*
+void BLOO()
 {
 	const wchar_t *swap = L"shieldmod\\chris or seb";
 
 	auto chris_or_seb = Utility::MakeAbsolutePathW(swap).c_str();
-	
+
 	if (INVALID_FILE_ATTRIBUTES != GetFileAttributesW(chris_or_seb))
 	{
 		ChrisOrSebastian = true;
@@ -84,21 +168,29 @@ void CAPUPLOADBANNER()
 		ChrisOrSebastian = false;
 		CreateFileW(chris_or_seb, GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 	}
+}*/
 
+std::map<const std::wstring, Banner> banners_;
+
+/// supports reuploading banner art
+void CAPUPLOADBANNER(const wchar_t *pink)
+{
 	int width = 900;
 	int height = 500;
-	//int width = 512;
-	//int height = 512;
 
-	auto path = Utility::MakeAbsolutePathW(L"shieldmod\\");
+	if (banners_.find(pink) == banners_.end())
+	{
+		banners_.emplace(pink, Banner());
+	}
+	Banner &banner = banners_.at(pink);
 
-	auto pink = ChrisOrSebastian ? L"pink captain america" : L"pink winter soldier";
-	
-	auto banner = (path + pink).c_str();
+	auto base = Utility::MakeAbsolutePathW(L"shieldmod\\");
+		
+	auto art = (base + pink).c_str();
 
-	// F
+	// ugly
 	FILE *fh = nullptr;
-	_wfopen_s(&fh, banner, L"rb");
+	_wfopen_s(&fh, art, L"rb");
 
 	fseek(fh, 0, SEEK_END);
 
@@ -110,7 +202,7 @@ void CAPUPLOADBANNER()
 	data[length] = 0;
 	fread(data, 1, length, fh);
 	fclose(fh);
-	// F
+	// ugly
 
 	unsigned char *pixels = data;
 
@@ -141,13 +233,11 @@ void CAPUPLOADBANNER()
 	subResource.SysMemPitch = desc.Width * 4;
 	subResource.SysMemSlicePitch = 0;
 
-	HRESULT hr = vars.device->CreateTexture2D(&desc, &subResource, &pTexture);
+	HRESULT hr = vars.device->CreateTexture2D(&desc, &subResource, &banner.texture);
 
 	if (FAILED(hr))
 	{
-
 		std::cout << "capuploadbanner texture2d hresult " << std::hex << hr << std::endl;
-
 		return;
 	}
 
@@ -159,13 +249,11 @@ void CAPUPLOADBANNER()
 	srvDesc.Texture2D.MipLevels = desc.MipLevels;
 	srvDesc.Texture2D.MostDetailedMip = 0;
 
-	hr = vars.device->CreateShaderResourceView(pTexture, &srvDesc, &TextureView_);
+	hr = vars.device->CreateShaderResourceView(banner.texture, &srvDesc, &banner.view);
 
 	if (FAILED(hr))
 	{
-
 		std::cout << "capuploadbanner textureview hresult " << std::hex << hr << std::endl;
-
 		return;
 	}
 }
