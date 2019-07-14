@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "sourceMap": false,
+        "module": "es6",
+        "target": "es6",
+        "jsx": "preserve",
+        "outDir": "js/",
+        "strictNullChecks": true
+    },
+
+    "include": [
+        "./src",
+    ],
+
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "name": "my-awesome-package",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "rollup -c",
+        "watch": "rollup -c -w",
+        "dev": "npm-run-all --parallel start watch"
+    },
+    "dependencies": {
+        "@types/node": "^11.13.0",
+        "png-js": "^0.1.1"
+    }
+}
