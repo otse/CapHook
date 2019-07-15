@@ -143,12 +143,18 @@ void Cap::Draw()
 
 			cap::CAPUPLOADBANNER(L"pink captain america");
 			cap::CAPUPLOADBANNER(L"pink winter soldier");
-			cap::CAPUPLOADBANNER(L"pink winter soldier 2");
+			//cap::CAPUPLOADBANNER(L"pink winter soldier 2");
 		}
 
 		if (ImGui::Button("Toggle ShieldMod Console"))
 		{
 			ConsoleActive_ = !ConsoleActive_;
+		}
+
+		if (ImGui::Button("Show Error"))
+		{
+        	MessageBoxW(nullptr, L"Not enough vram to run the game!", FXNAME_WIDE, MB_ICONERROR);
+
 		}
 	}
 

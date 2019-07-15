@@ -94,12 +94,12 @@ void CAPDRAWBANNER()
 	ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(5.f,12.f));
 	ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, 80.f);
 
-	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(255, 255, 255, 0));
-	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(255,255,255,0));
-	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(255, 255, 255, 0));
+	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(1, 1, 1, 0));
+	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(1, 1, 1,0));
+	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(1, 1, 1, 0));
 
-	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(100, 0, 100, 255));
-	ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(70, 70, 70, 255));
+	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(130/255.f, 0, 130/255.f, 1.f));
+	ImGui::PushStyleColor(ImGuiCol_SliderGrabActive, ImVec4(1, 1, 1, 1));
 
 	ImGui::PushItemWidth(900);
 
