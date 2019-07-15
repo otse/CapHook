@@ -72,13 +72,13 @@ static HRESULT D3D11Present_Wrap(int64_t* Device3D, int64_t* a2, int64_t* a3)
 		g_Menu->Draw();
 
 	// Caps
-	if (cap::CapActive_)
+	if (cap::cap_active_)
 		cap::cap_->Draw();
 
 	if (cap::ConsoleActive_)
 		cap::console_->Draw();
 
-	if (cap::StartupNoticeActive_)
+	if (cap::startup_notice_active_)
 		cap::StartupNotice();
 
     // process render tasks

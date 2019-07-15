@@ -15,10 +15,14 @@
 
 #include <Utility/PathUtils.h>
 
+#include <chrono>
+
 namespace cap
 {
-bool CapActive_ = false;
-bool StartupNoticeActive_ = true;
+gamma_time_t gamma_time_;
+
+bool cap_active_ = false;
+bool startup_notice_active_ = true;
 
 cap_t Cap_()
 {
@@ -111,7 +115,7 @@ void Cap::Draw()
 
 	ImGui::SetWindowPos(ImVec2(600, 300));
 	ImGui::SetNextWindowSize(ImVec2(600, 300), ImGuiSetCond_FirstUseEver);
-	ImGui::Begin("ShieldMod for ND", &CapActive_, 0);
+	ImGui::Begin("ShieldMod for ND", &cap_active_, 0);
 
 	///ImGui::Text("Thanks for playing! ShieldMod is a fork of DawnHook. Press / to toggle menu.\n");
 
@@ -153,8 +157,7 @@ void Cap::Draw()
 
 		if (ImGui::Button("Show Error"))
 		{
-        	MessageBoxW(nullptr, L"Not enough vram to run the game!", FXNAME_WIDE, MB_ICONERROR);
-
+			MessageBoxW(nullptr, L"Not enough vram to run the game!", FXNAME_WIDE, MB_ICONERROR);
 		}
 	}
 

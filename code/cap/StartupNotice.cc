@@ -11,7 +11,7 @@ int fr = 0;
 void StartupNotice()
 {
 	if (++fr > 8000)
-		StartupNoticeActive_ = false;
+		startup_notice_active_ = false;
 
 	const float DISTANCE = 30.0f;
 	static int corner = 3;
@@ -31,7 +31,7 @@ void StartupNotice()
 				 ImGuiWindowFlags_NoNav;
 
 	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-	if (ImGui::Begin("Startup Notice", &StartupNoticeActive_, flags))
+	if (ImGui::Begin("Startup Notice", &startup_notice_active_, flags))
 	{
 		ImGui::TextColored(ImVec4(1, 0, 1, 1), "ShieldMod");
 		ImGui::Separator();
