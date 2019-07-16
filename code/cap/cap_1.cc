@@ -161,9 +161,13 @@ void Cap::Draw()
 		}
 
 		std::string falsy = show_hourglass_ ? "true": "false";
-		if (ImGui::Button(("Bullet Time Hourglass UI: " + falsy).c_str()))
+		if (ImGui::Button(("Bullet Time UI Bar: " + falsy).c_str()))
 		{
 			show_hourglass_ = !show_hourglass_;
+			til.in = 0;
+			til.out = 0;
+			til.in_s = 2;
+			til.out_s = 2;
 		}
 	}
 

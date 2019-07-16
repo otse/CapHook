@@ -13,4 +13,12 @@ namespace cap
     Void Bt_Toggle();
     Void Bt_Frame();
     Void Bt_Draw();
+
+	struct til_t
+	{
+		bool til = false;
+		float in = 0, out = 0, in_s = 2, out_s = 2;
+	};
+
+	extern til_t til;
 }

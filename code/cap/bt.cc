@@ -10,17 +10,13 @@
 namespace cap
 {
 // externs
-bool show_hourglass_ = true;
+bool show_hourglass_ = true; // bar
 
 // locals
 bool slow = false;
 float hourglass = 0;
 
-struct
-{
-	bool til = false;
-	float in = 0, out = 0, in_s = 2, out_s = 2;
-} til;
+til_t til;
 
 Void Bt_In()
 {
@@ -45,8 +41,7 @@ Void Bt_Toggle()
 	if (hourglass > .25f)
 	{
 		slow = true;
-		til.in = 1;
-		til.in_s = 1;
+		til.in_s = til.in = 1;
 		til.out_s = 0;
 
 		Bt_In();
@@ -67,10 +62,6 @@ Void Bt_Frame()
 			til.out = 1;
 			til.out_s = 2;
 		}
-		else if (hourglass <= .1f && til.til)
-		{
-			// no early fade
-		}
 	}
 
 	else if (!slow)
@@ -81,9 +72,8 @@ Void Bt_Frame()
 		{
 			til.til = true;
 			til.in = 1;
-			til.in_s = 2;
+			til.out_s = til.in_s = 2;
 			til.out = -2;
-			til.out_s = 2;
 		}
 	}
 
@@ -169,4 +159,5 @@ Void Bt_Draw()
 
 	ImGui::PopStyleVar(3);
 }
+
 } // namespace cap

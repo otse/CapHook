@@ -87,7 +87,7 @@ static HRESULT D3D11Present_Wrap(int64_t* Device3D, int64_t* a2, int64_t* a3)
 	// bt
 	Bt_Frame();
 
-	if (bt_draw_)
+	if (show_hourglass_)
 
 		Bt_Draw();
 

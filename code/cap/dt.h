@@ -5,14 +5,12 @@
 using namespace std::chrono;
 using namespace std::chrono_literals;
 
-constexpr std::chrono::nanoseconds timestep(16ms);
+// constexpr std::chrono::nanoseconds timestep(16ms);
 
 #define CAP_DELTA_TIME_SET() delta_time_.Set();
 
 namespace cap
 {
-//typedef std::chrono::duration<float> float_duration;
-
 template <typename T>
 struct delta_time_t
 {
@@ -25,7 +23,7 @@ struct delta_time_t
 		d = a - b;
 		s = d.count() / 1000000000.f;
 		b = high_resolution_clock::now();
-		CAPCONSOLELOG("dt s " + std::to_string(s));
+		// CAPCONSOLELOG("dt s " + std::to_string(s));
 	}
 };
 
