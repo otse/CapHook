@@ -16,7 +16,7 @@
 #include <MinHook.h>
 
 //Cap
-#include <shieldmod/cap_1.h>
+#include <shieldmod/ShieldMod.h>
 
 bool IsGameGenuine()
 {

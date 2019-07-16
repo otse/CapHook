@@ -14,9 +14,9 @@
 
 premake.path = premake.path .. ";build"
 
-local FX_NAME = "CapHook"
+local FX_NAME = "ShieldMod"
 
-workspace "CapHook"
+workspace "ShieldMod"
     configurations { "Debug", "Release" }
 
 	targetdir '../bin/%{cfg.buildcfg}/'
@@ -86,8 +86,8 @@ workspace "CapHook"
             --"_WINSOCK_DEPRECATED_NO_WARNINGS"
         }
 
-	group "Cap"
-	include "./cap"
+	group "ShieldMod"
+	include "./shieldmod"
 	
     group "Base"
 	include "./dawnhook"

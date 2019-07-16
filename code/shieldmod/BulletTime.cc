@@ -20,7 +20,7 @@ bool show_hourglass_ = true;
 bool slow = false;
 float hourglass = 0;
 
-til_t til;
+bar_t bar;
 
 Void Bt_In()
 {
@@ -42,11 +42,11 @@ Void Bt_Out()
 
 Void Bt_Toggle()
 {
-	if (hourglass > .25f)
+	if (!slow && hourglass > .25f)
 	{
 		slow = true;
-		til.in_s = til.in = 1;
-		til.out_s = 0;
+		bar.in_s = bar.in = 1;
+		bar.out_s = 0;
 
 		Bt_In();
 	}
@@ -61,10 +61,10 @@ Void Bt_Frame()
 		if (hourglass <= 0)
 		{
 			Bt_Out();
-			til.til = false;
-			til.in = 0;
-			til.out = 1;
-			til.out_s = 2;
+			bar.til = false;
+			bar.in = 0;
+			bar.out = 1;
+			bar.out_s = 2;
 		}
 	}
 
@@ -72,12 +72,12 @@ Void Bt_Frame()
 	{
 		hourglass += delta_time_.s / 20;
 		// ALmost recharged
-		if (hourglass >= .9f && !til.til)
+		if (hourglass >= .9f && !bar.til)
 		{
-			til.til = true;
-			til.in = 1;
-			til.out_s = til.in_s = 2;
-			til.out = -2;
+			bar.til = true;
+			bar.in = 1;
+			bar.out_s = bar.in_s = 2;
+			bar.out = -2;
 		}
 	}
 
@@ -89,15 +89,12 @@ bool show_hourglass = true;
 
 Void Bt_Draw()
 {
-	float fade = til.Get();
+	float fade = bar.Get();
 
 	if (-1 == fade && slow)
 		fade = 1;
-		
-	else
-		fade = 0;
 
-	if (!fade || !show_hourglass_)
+	if (fade < 0 || !show_hourglass_)
 		return;
 
 	ImGuiIO &io = ImGui::GetIO();

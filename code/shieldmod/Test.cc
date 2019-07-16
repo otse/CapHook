@@ -8,7 +8,7 @@
 
 #include <Utility/PathUtils.h>
 
-#include <cap_1.h>
+#include <ShieldMod.h>
 
 namespace shieldmod
 {

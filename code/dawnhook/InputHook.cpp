@@ -17,7 +17,7 @@
 #include <dinputd.h>
 
 // Cap
-#include <shieldmod/cap_1.h>
+#include <shieldmod/ShieldMod.h>
 
 class CPlatformWindow
 {

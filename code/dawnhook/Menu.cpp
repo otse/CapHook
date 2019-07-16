@@ -18,7 +18,7 @@
 #include <Menu.h>
 
 // Cap
-#include <shieldmod/cap_1.h>
+#include <shieldmod/ShieldMod.h>
 
 static bool ScriptItemSelector(void* data, int idx, const char** out_text)
 {

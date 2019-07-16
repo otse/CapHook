@@ -168,10 +168,10 @@ void Cap::Draw()
 		if (ImGui::Button(("Bullet Time UI Bar: " + falsy).c_str()))
 		{
 			show_hourglass_ = !show_hourglass_;
-			til.in = 0;
-			til.out = 0;
-			til.in_s = 2;
-			til.out_s = 2;
+			bar.in = 0;
+			bar.out = 0;
+			bar.in_s = 2;
+			bar.out_s = 2;
 		}
 	}
 

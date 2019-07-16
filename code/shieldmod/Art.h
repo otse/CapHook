@@ -8,6 +8,7 @@
 #define shieldmod_art_h
 
 #include <d3d11.h>
+#include <string>
 
 #include <map>
 
@@ -40,3 +41,5 @@ namespace shieldmod
 		ID3D11RenderTargetView *rtv;
 	};
 }
+
+#endif

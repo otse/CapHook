@@ -7,10 +7,10 @@
 #ifndef shieldmod_shieldmod_h
 #define shieldmod_shieldmod_h
 
+#include "Dt.h"
 #include "Log.h"
 
 #include "fs.h"
-#include "Dt.h"
 #include "BulletTime.h"
 
 #include "Art.h"

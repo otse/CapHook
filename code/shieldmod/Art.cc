@@ -24,6 +24,8 @@ namespace shieldmod
 {
 bool ChrisOrSebastian = false;
 
+std::map<const std::wstring, Banner> banners_;
+
 CAPVARS vars;
 
 void CAPSTOREVARS(
@@ -32,8 +34,6 @@ void CAPSTOREVARS(
 	ID3D11DeviceContext *context,
 	ID3D11RenderTargetView *rtv)
 {
-	std::puts("Stored id3d for cap");
-
 	vars.swapchain = swapchain;
 	vars.device = device;
 	vars.context = context;
@@ -210,8 +210,6 @@ void BLOO()
 		CreateFileW(chris_or_seb, GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 	}
 }*/
-
-std::map<const std::wstring, Banner> banners_;
 
 /// supports reuploading banner art
 void CAPUPLOADBANNER(const wchar_t *pink)
