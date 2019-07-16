@@ -13,11 +13,20 @@ float hourglass = 0;
 
 bool slow = false;
 
+bool til = false;
+float til_in = 0;
+float til_out = 0;
+float til_in_s = 2;
+float til_out_s = 2;
+
 Void Bt_In()
 {
 	auto path = Utility::MakeAbsolutePathW(L"shieldmod\\luas\\bt_in.lua");
 
 	bool result = Lua::RunFile(path.c_str());
+
+	til_in = 0;
+	til_out = 0;
 
 	slow = true;
 }
@@ -36,14 +45,13 @@ Void Bt_Toggle()
 	if (hourglass > .25f)
 	{
 		slow = true;
+		til_in = 1;
+		til_in_s = 0.5;
+		til_out_s = 0;
 
 		Bt_In();
 	}
 }
-
-bool til = false;
-float til_in = 0;
-float til_out = 0;
 
 Void Bt_Frame()
 {
@@ -51,20 +59,31 @@ Void Bt_Frame()
 	{
 		hourglass -= delta_time_.s / 5;
 
-		if (hourglass < 0) {
+		if (hourglass <= 0)
+		{
 			Bt_Out();
 			til = false;
+			til_in = 0;
+			til_out = 1;
+			til_out_s = 2;
+		}
+		else if (hourglass <= .1f && til)
+		{
+			// no early fade
 		}
 	}
-	
-	if (!slow)
+
+	else if (!slow)
 	{
 		hourglass += delta_time_.s / 20;
-
+		// ALmost recharged
 		if (hourglass >= .9f && !til)
 		{
 			til = true;
-			til_in = 1.0f;
+			til_in = 1;
+			til_in_s = 2;
+			til_out = -2;
+			til_out_s = 1;
 		}
 	}
 
@@ -77,27 +96,30 @@ Void Bt_Draw()
 {
 	float fade = 0;
 
-	if (til_in)
+	if (til_in > 0)
 	{
-		til_in -= delta_time_.s / 2;
+		til_in -= delta_time_.s / til_in_s;
 		if (til_in <= 1)
 			fade = 1 - til_in;
 		if (til_in <= 0)
 		{
 			til_in = 0;
-			til_out = 2.0;
+			if (til_out_s)
+				til_out = -til_out;
 		}
 	}
-	else if (til_out)
+	else if (til_out > 0)
 	{
 		fade = 1;
-		til_out -= delta_time_.s / 2;
+		til_out -= delta_time_.s / til_out_s;
 		if (til_out <= 1)
 			fade = til_out;
 		if (til_out <= 0)
-		{
 			til_out = 0;
-		}
+	}
+	else if (slow)
+	{
+		fade = 1;
 	}
 
 	//if (!fade)
