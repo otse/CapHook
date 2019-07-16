@@ -25,9 +25,6 @@ Void Bt_In()
 
 	bool result = Lua::RunFile(path.c_str());
 
-	til_in = 0;
-	til_out = 0;
-
 	slow = true;
 }
 
@@ -46,7 +43,7 @@ Void Bt_Toggle()
 	{
 		slow = true;
 		til_in = 1;
-		til_in_s = 0.5;
+		til_in_s = 1;
 		til_out_s = 0;
 
 		Bt_In();
@@ -83,7 +80,7 @@ Void Bt_Frame()
 			til_in = 1;
 			til_in_s = 2;
 			til_out = -2;
-			til_out_s = 1;
+			til_out_s = 2;
 		}
 	}
 
