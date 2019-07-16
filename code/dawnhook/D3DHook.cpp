@@ -16,9 +16,7 @@
 #include <Menu.h>
 
 // Cap
-#include <cap/Cap.h>
-#include <cap/Banner.h>
-#include <cap/Console.h>
+#include <cap/cap_1.h>
 
 
 struct D3D_Class
@@ -72,14 +70,26 @@ static HRESULT D3D11Present_Wrap(int64_t* Device3D, int64_t* a2, int64_t* a3)
 		g_Menu->Draw();
 
 	// Caps
-	if (cap::cap_active_)
-		cap::cap_->Draw();
+	// Todo, logic in render loop?
+	using namespace cap;
 
-	if (cap::ConsoleActive_)
-		cap::console_->Draw();
+	CAP_DELTA_TIME_SET();
 
-	if (cap::startup_notice_active_)
-		cap::StartupNotice();
+	if (cap_active_)
+		cap_->Draw();
+
+	if (log_active_)
+		log_->Draw();
+
+	if (startup_notice_active_)
+		StartupNotice();
+	
+	// bt
+	Bt_Frame();
+
+	if (bt_draw_)
+
+		Bt_Draw();
 
     // process render tasks
     ImGui::Render();

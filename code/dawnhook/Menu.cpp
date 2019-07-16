@@ -18,7 +18,7 @@
 #include <Menu.h>
 
 // Cap
-#include <cap/Cap.h>
+#include <cap/cap_1.h>
 
 static bool ScriptItemSelector(void* data, int idx, const char** out_text)
 {

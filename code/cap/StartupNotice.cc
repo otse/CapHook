@@ -1,6 +1,6 @@
 #include <Windows.h>
 
-#include "Cap.h"
+#include "cap_1.h"
 
 #include <imgui.h>
 #include <imgui_tabs.h>
@@ -19,8 +19,10 @@ void StartupNotice()
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(15, 15));
 
-	ImVec2 window_pos = ImVec2((corner & 1) ? io.DisplaySize.x - DISTANCE : DISTANCE, (corner & 2) ? io.DisplaySize.y - DISTANCE : DISTANCE);
-	ImVec2 window_pos_pivot = ImVec2((corner & 1) ? 1.0f : 0.0f, (corner & 2) ? 1.0f : 0.0f);
+	ImVec2 window_pos = ImVec2(
+		io.DisplaySize.x - DISTANCE,
+		io.DisplaySize.y - DISTANCE);
+	ImVec2 window_pos_pivot = ImVec2(1.0f, 1.0f);
 	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
 
 	auto flags = ImGuiWindowFlags_NoMove |

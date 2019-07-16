@@ -16,7 +16,7 @@
 #include <MinHook.h>
 
 //Cap
-#include <cap/Cap.h>
+#include <cap/cap_1.h>
 
 bool IsGameGenuine()
 {

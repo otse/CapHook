@@ -2,9 +2,7 @@
 
 #include <Windows.h>
 
-#include "Cap.h"
-#include "Banner.h"
-#include "Console.h"
+#include "cap_1.h"
 
 //#include <Menu.h>
 
@@ -15,11 +13,9 @@
 
 #include <Utility/PathUtils.h>
 
-#include <chrono>
-
 namespace cap
 {
-gamma_time_t gamma_time_;
+delta_time_t<float> delta_time_;
 
 bool cap_active_ = false;
 bool startup_notice_active_ = true;
@@ -44,11 +40,14 @@ Cap::Cap()
 	check(L"shieldmod");
 	check(L"shieldmod\\luas");
 
-	Console_();
+	Log_();
 
 	CAPCONSOLELOG("Starting");
 
 	LoadLuas();
+
+	delta_time_.a = high_resolution_clock::now();
+	delta_time_.b = high_resolution_clock::now();
 }
 
 Cap::~Cap()
@@ -68,7 +67,7 @@ void Cap::Key(WPARAM w)
 
 	if (w == VK_MULTIPLY)
 	{
-		ConsoleActive_ = !ConsoleActive_;
+		log_active_ = !log_active_;
 	}
 
 #define SCRIPTMAC(x)                                                            \
@@ -92,6 +91,10 @@ void Cap::Key(WPARAM w)
 	if (w == VK_NUMPAD8)
 
 		SCRIPTMAC("pull_shield");
+
+	if (w == VK_F1)
+
+		Bt_Toggle();
 }
 
 /// Load our own game scripts
@@ -150,9 +153,9 @@ void Cap::Draw()
 			//cap::CAPUPLOADBANNER(L"pink winter soldier 2");
 		}
 
-		if (ImGui::Button("Toggle ShieldMod Console"))
+		if (ImGui::Button("Toggle ShieldMod Log"))
 		{
-			ConsoleActive_ = !ConsoleActive_;
+			log_active_ = !log_active_;
 		}
 
 		if (ImGui::Button("Show Error"))

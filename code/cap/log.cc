@@ -1,27 +1,26 @@
 #include <Windows.h>
 
-#include <Cap.h>
-#include <Console.h>
+#include "cap_1.h"
 
 #include <imgui.h>
 #include <imgui_tabs.h>
 
 namespace cap
 {
-bool ConsoleActive_ = false;
+bool log_active_ = false;
 
-console_t Console_()
+log_t Log_()
 {
-	return console_ = new Console();
+	return log_ = new Log();
 }
 
-console_t console_ = nullptr;
+log_t log_ = nullptr;
 
-Console::Console()
+Log::Log()
 {
 }
 
-void Console::Log(const std::string &x)
+void Log::Logg(const std::string &x)
 {
 	_deq.push_back(x);
 
@@ -29,7 +28,7 @@ void Console::Log(const std::string &x)
 		_deq.pop_front();
 }
 
-void Console::Draw()
+void Log::Draw()
 {
 	ImGuiIO &io = ImGui::GetIO();
 
@@ -45,14 +44,14 @@ void Console::Draw()
 				 ImGuiWindowFlags_NoFocusOnAppearing |
 				 ImGuiWindowFlags_NoNav;
 
-	ImGui::Begin("ShieldMod Console", &ConsoleActive_, flags);
+	ImGui::Begin("ShieldMod Log", &log_active_, flags);
 
-	ImGui::Text("ShieldMod Console");
+	ImGui::Text("ShieldMod Log");
 
 	ImGui::Separator();
 	ImGui::Separator();
 
-	ImGui::BeginChild("scrolling", ImVec2(0,0));
+	ImGui::BeginChild("scrolling", ImVec2(0, 0));
 
 	size_t i = 0;
 	for (; i < _deq.size(); i++)

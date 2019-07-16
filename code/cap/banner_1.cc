@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Console.h"
-#include "Banner.h"
+#include "cap_1.h"
 
 #include <Windows.h>
 #include <d3d11.h>
