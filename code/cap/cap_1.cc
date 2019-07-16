@@ -144,9 +144,11 @@ void Cap::Draw()
 		//std::string spawn_shield = "Spawn Shield Delay: ";
 		//ImGui::Label(spawn_shield.c_str());
 
-		if (ImGui::Button("Upload Banner Texture"))
+		ImGui::Separator();
+
+		if (ImGui::Button("Reload Banner Art"))
 		{
-			CAPCONSOLELOG("Uploading banner");
+			CAPCONSOLELOG("Reploading banner art");
 
 			cap::CAPUPLOADBANNER(L"pink captain america");
 			cap::CAPUPLOADBANNER(L"pink winter soldier");
@@ -158,9 +160,10 @@ void Cap::Draw()
 			log_active_ = !log_active_;
 		}
 
-		if (ImGui::Button("Show Error"))
+		std::string falsy = show_hourglass_ ? "true": "false";
+		if (ImGui::Button(("Bullet Time Hourglass UI: " + falsy).c_str()))
 		{
-			MessageBoxW(nullptr, L"Not enough vram to run the game!", FXNAME_WIDE, MB_ICONERROR);
+			show_hourglass_ = !show_hourglass_;
 		}
 	}
 

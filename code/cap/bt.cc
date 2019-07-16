@@ -9,15 +9,18 @@
 
 namespace cap
 {
+// externs
+bool show_hourglass_ = true;
+
+// locals
+bool slow = false;
 float hourglass = 0;
 
-bool slow = false;
-
-bool til = false;
-float til_in = 0;
-float til_out = 0;
-float til_in_s = 2;
-float til_out_s = 2;
+struct
+{
+	bool til = false;
+	float in = 0, out = 0, in_s = 2, out_s = 2;
+} til;
 
 Void Bt_In()
 {
@@ -42,9 +45,9 @@ Void Bt_Toggle()
 	if (hourglass > .25f)
 	{
 		slow = true;
-		til_in = 1;
-		til_in_s = 1;
-		til_out_s = 0;
+		til.in = 1;
+		til.in_s = 1;
+		til.out_s = 0;
 
 		Bt_In();
 	}
@@ -59,12 +62,12 @@ Void Bt_Frame()
 		if (hourglass <= 0)
 		{
 			Bt_Out();
-			til = false;
-			til_in = 0;
-			til_out = 1;
-			til_out_s = 2;
+			til.til = false;
+			til.in = 0;
+			til.out = 1;
+			til.out_s = 2;
 		}
-		else if (hourglass <= .1f && til)
+		else if (hourglass <= .1f && til.til)
 		{
 			// no early fade
 		}
@@ -74,13 +77,13 @@ Void Bt_Frame()
 	{
 		hourglass += delta_time_.s / 20;
 		// ALmost recharged
-		if (hourglass >= .9f && !til)
+		if (hourglass >= .9f && !til.til)
 		{
-			til = true;
-			til_in = 1;
-			til_in_s = 2;
-			til_out = -2;
-			til_out_s = 2;
+			til.til = true;
+			til.in = 1;
+			til.in_s = 2;
+			til.out = -2;
+			til.out_s = 2;
 		}
 	}
 
@@ -88,57 +91,58 @@ Void Bt_Frame()
 }
 
 bool bt_draw_ = true;
+bool show_hourglass = true;
 
 Void Bt_Draw()
 {
 	float fade = 0;
 
-	if (til_in > 0)
+	if (til.in > 0)
 	{
-		til_in -= delta_time_.s / til_in_s;
-		if (til_in <= 1)
-			fade = 1 - til_in;
-		if (til_in <= 0)
+		til.in -= delta_time_.s / til.in_s;
+		if (til.in <= 1)
+			fade = 1 - til.in;
+		if (til.in <= 0)
 		{
-			til_in = 0;
-			if (til_out_s)
-				til_out = -til_out;
+			til.in = 0;
+			if (til.out_s)
+				til.out = -til.out;
 		}
 	}
-	else if (til_out > 0)
+	else if (til.out > 0)
 	{
 		fade = 1;
-		til_out -= delta_time_.s / til_out_s;
-		if (til_out <= 1)
-			fade = til_out;
-		if (til_out <= 0)
-			til_out = 0;
+		til.out -= delta_time_.s / til.out_s;
+		if (til.out <= 1)
+			fade = til.out;
+		if (til.out <= 0)
+			til.out = 0;
 	}
 	else if (slow)
 	{
 		fade = 1;
 	}
 
-	//if (!fade)
-	//	return;
+	if (!fade || !show_hourglass_)
+		return;
 
 	ImGuiIO &io = ImGui::GetIO();
 
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(15, 15));
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 	ImGui::PushStyleVar(ImGuiStyleVar_GrabRounding, 0.f);
 	ImGui::PushStyleVar(ImGuiStyleVar_GrabMinSize, hourglass * 200);
 
 	ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(1, 1, 1, 0));
 	ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(1, 1, 1, 0));
 	ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(1, 1, 1, 0));
-	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(fade, fade, fade, .75f));
+	ImGui::PushStyleColor(ImGuiCol_SliderGrab, ImVec4(1, 1, 1, .8f * fade));
 	ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(255, 255, 255, 0));
 
 	ImGui::SetNextWindowBgAlpha(0.0f);
 
 	ImVec2 window_pos = ImVec2(
-		io.DisplaySize.x - 50,
-		io.DisplaySize.y - 100);
+		io.DisplaySize.x - 20,
+		io.DisplaySize.y - 20);
 	ImVec2 window_pos_pivot = ImVec2(1.0f, 1.0f);
 	ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
 
@@ -157,7 +161,7 @@ Void Bt_Draw()
 	//ImGui::Text(bt.c_str());
 
 	float v = 0;
-	ImGui::VSliderFloat("##bt", ImVec2(20, 200), &v, 0.f, 1.f, "");
+	ImGui::VSliderFloat("##bt", ImVec2(25, 200), &v, 0.f, 1.f, "");
 
 	ImGui::End();
 

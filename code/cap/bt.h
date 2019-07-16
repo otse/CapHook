@@ -5,6 +5,7 @@
 namespace cap
 {
 	extern bool bt_draw_;
+	extern bool show_hourglass_;
     
     typedef void Void;
     Void Bt_In();
