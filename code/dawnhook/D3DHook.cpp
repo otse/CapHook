@@ -85,11 +85,11 @@ static HRESULT D3D11Present_Wrap(int64_t* Device3D, int64_t* a2, int64_t* a3)
 		StartupNotice();
 	
 	// bt
-	Bt_Frame();
+	BtFrame();
 
 	if (show_hourglass_)
 
-		Bt_Draw();
+		BtDraw();
 
     // process render tasks
     ImGui::Render();

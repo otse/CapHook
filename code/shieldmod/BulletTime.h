@@ -14,17 +14,20 @@ namespace shieldmod
 	extern bool bt_draw_;
 	extern bool show_hourglass_;
 
-	typedef void Void;
-	Void Bt_In();
-	Void Bt_Out();
-	Void Bt_Toggle();
-	Void Bt_Frame();
-	Void Bt_Draw();
+	typedef void Bt;
 
-	struct bar_t;
-	extern bar_t bar;
+	Bt BtIn();
+	Bt BtOut();
+	Bt BtToggle();
+	Bt BtFrame();
+	Bt BtDraw();
 
-	struct bar_t
+	// bullet time bar fade controller
+
+	struct Bar;
+	extern Bar bar;
+
+	struct Bar
 	{
 		bool til = false;
 
@@ -66,7 +69,6 @@ namespace shieldmod
 				fade = -1;
 
 			return fade;
-
 		}
 	};
 }

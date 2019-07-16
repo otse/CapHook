@@ -15,7 +15,7 @@ using namespace std::chrono_literals; // ?
 namespace shieldmod
 {
 template <typename T>
-struct Dt_t
+struct Dt
 {
 	T s;
 	nanoseconds d;
@@ -29,7 +29,7 @@ struct Dt_t
 	}
 };
 
-extern Dt_t<float> delta_time_;
+extern Dt<float> delta_time_;
 
 } // namespace shieldmod
 

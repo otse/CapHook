@@ -19,7 +19,7 @@
 
 namespace shieldmod
 {
-Dt_t<float> delta_time_;
+Dt<float> delta_time_;
 
 bool cap_wnd_ = false;
 bool startup_wnd_ = true;
@@ -98,7 +98,7 @@ void Cap::Key(WPARAM w)
 
 	if (w == VK_F1)
 
-		Bt_Toggle();
+		BtToggle();
 }
 
 /// Load our own game scripts

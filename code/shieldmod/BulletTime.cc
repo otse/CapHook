@@ -20,9 +20,7 @@ bool show_hourglass_ = true;
 bool slow = false;
 float hourglass = 0;
 
-bar_t bar;
-
-Void Bt_In()
+Bt BtIn()
 {
 	auto path = Utility::MakeAbsolutePathW(L"shieldmod\\luas\\bt_in.lua");
 
@@ -31,7 +29,7 @@ Void Bt_In()
 	slow = true;
 }
 
-Void Bt_Out()
+Bt BtOut()
 {
 	auto path = Utility::MakeAbsolutePathW(L"shieldmod\\luas\\bt_out.lua");
 
@@ -40,7 +38,7 @@ Void Bt_Out()
 	slow = false;
 }
 
-Void Bt_Toggle()
+Bt BtToggle()
 {
 	if (!slow && hourglass > .25f)
 	{
@@ -48,11 +46,11 @@ Void Bt_Toggle()
 		bar.in_s = bar.in = 1;
 		bar.out_s = 0;
 
-		Bt_In();
+		BtIn();
 	}
 }
 
-Void Bt_Frame()
+Bt BtFrame()
 {
 	if (slow)
 	{
@@ -60,7 +58,7 @@ Void Bt_Frame()
 
 		if (hourglass <= 0)
 		{
-			Bt_Out();
+			BtOut();
 			bar.til = false;
 			bar.in = 0;
 			bar.out = 1;
@@ -87,7 +85,9 @@ Void Bt_Frame()
 bool bt_draw_ = true;
 bool show_hourglass = true;
 
-Void Bt_Draw()
+Bar bar;
+
+Bt BtDraw()
 {
 	float fade = bar.Get();
 
