@@ -1,10 +1,16 @@
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
+
 #include <Windows.h>
 
 #include <Utility/PathUtils.h>
 
 #include <cap_1.h>
 
-namespace cap
+namespace shieldmod
 {
 
 /* 
@@ -40,4 +46,4 @@ CAPTEST TestFindScripts()
 	}
 }
 */
-} // namespace cap
+} // namespace shieldmod

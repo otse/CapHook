@@ -1,11 +1,17 @@
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
+
 #include <Windows.h>
 
-#include "cap_1.h"
+#include "ShieldMod.h"
 
 #include <imgui.h>
 #include <imgui_tabs.h>
 
-namespace cap
+namespace shieldmod
 {
 bool log_active_ = false;
 
@@ -67,4 +73,4 @@ void Log::Draw()
 	ImGui::End();
 }
 
-} // namespace cap
+} // namespace shieldmod

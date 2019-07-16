@@ -1,8 +1,12 @@
-// Caps filesystem
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
 
 #include <Windows.h>
 
-#include "cap_1.h"
+#include "ShieldMod.h"
 
 #include <imgui.h>
 #include <imgui_tabs.h>

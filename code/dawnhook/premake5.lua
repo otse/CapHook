@@ -24,7 +24,7 @@ project "DawnHook"
 	links
 	{
 		--"lua",
-		"cap",
+		"shieldmod",
 		"minhook",
 		"imgui",
 		"udis86",

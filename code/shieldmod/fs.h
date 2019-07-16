@@ -1,9 +1,16 @@
-#pragma once
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
+
+#ifndef shieldmod_fs_h
+#define shieldmod_fs_h
 
 #include <string>
 #include <vector>
 
-// Caps own filesystem
+// Todo, completely nuke this file
 
 namespace fs
 {
@@ -21,6 +28,7 @@ struct List
 	List(const std::wstring);
 
 	void Reload();
+
 	void Draw();
 };
 } // namespace fs
@@ -28,3 +36,5 @@ struct List
 typedef fs::List *fs_list_t;
 
 fs_list_t fsList_(const std::wstring);
+
+#endif

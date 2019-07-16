@@ -1,10 +1,17 @@
-#pragma once
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
+
+#ifndef shieldmod_art_h
+#define shieldmod_art_h
 
 #include <d3d11.h>
 
 #include <map>
 
-namespace cap
+namespace shieldmod
 {
 	extern bool ChrisOrSebastian;
 

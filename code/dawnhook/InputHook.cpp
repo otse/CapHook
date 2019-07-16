@@ -17,7 +17,7 @@
 #include <dinputd.h>
 
 // Cap
-#include <cap/cap_1.h>
+#include <shieldmod/cap_1.h>
 
 class CPlatformWindow
 {
@@ -43,7 +43,7 @@ static WNDPROC GameWndProc;
 static void UpdateRawInput_Stub(void *self, float a2)
 {
 	// only update raw (dinput) if menu not visible
-	if (!g_MenuActive && !cap::cap_active_)
+	if (!g_MenuActive && !shieldmod::cap_wnd_)
 		UpdateRawInput(self, a2);
 }
 
@@ -51,7 +51,7 @@ static tagPOINT frozen;
 
 static BOOL GetCursorPos_Stub(LPPOINT lpPoint)
 {
-	if (g_MenuActive || cap::cap_active_)
+	if (g_MenuActive || shieldmod::cap_wnd_)
 	{
 		memcpy(lpPoint, &frozen, sizeof(tagPOINT));
 		return TRUE;
@@ -131,15 +131,15 @@ static LRESULT GameWndProc_Stub(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 	// Cap
 	// Todo, nullcheck cap_ ?
 	if (msg == WM_KEYDOWN)
-		cap::cap_->Key(wParam);
+		shieldmod::cap_->Key(wParam);
 
 	if (msg == WM_KEYDOWN && wParam == VK_DIVIDE)
 	{
-		cap::cap_active_ = !cap::cap_active_;
+		shieldmod::cap_wnd_ = !shieldmod::cap_wnd_;
 
 		ImGuiIO& IO = ImGui::GetIO();
 
-		if (cap::cap_active_)
+		if (shieldmod::cap_wnd_)
 		{
 			GetCursorPos_O(&frozen);
 			IO.MouseDrawCursor = true;
@@ -173,7 +173,7 @@ static LRESULT GameWndProc_Stub(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 		}
 	}
 
-	if (g_MenuActive || cap::cap_active_)
+	if (g_MenuActive || shieldmod::cap_wnd_)
 	{
 		DawnHook_ProcessInput(hwnd, msg, wParam, lParam);
 
@@ -187,7 +187,7 @@ static LRESULT GameWndProc_Stub(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 
 BOOL SetCursorPos_Stub(int X, int Y)
 {
-	if (g_MenuActive || cap::cap_active_)
+	if (g_MenuActive || shieldmod::cap_wnd_)
 	{
 		return TRUE;
 	}
@@ -197,7 +197,7 @@ BOOL SetCursorPos_Stub(int X, int Y)
 static void(*update)(void*);
 static void DoUpdate(char* k)
 {
-	if (!g_MenuActive && !cap::cap_active_)
+	if (!g_MenuActive && !shieldmod::cap_wnd_)
 		update(k);
 	//else
 		//*(tagPOINT*)(k + 132) = frozen;

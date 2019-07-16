@@ -1,17 +1,23 @@
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
+
 #include <Windows.h>
 
-#include "cap_1.h"
+#include "ShieldMod.h"
 
 #include <imgui.h>
 #include <imgui_tabs.h>
 
-namespace cap
+namespace shieldmod
 {
 int fr = 0;
 void StartupNotice()
 {
 	if (++fr > 8000)
-		startup_notice_active_ = false;
+		startup_wnd_ = false;
 
 	const float DISTANCE = 30.0f;
 	static int corner = 3;
@@ -33,7 +39,7 @@ void StartupNotice()
 				 ImGuiWindowFlags_NoNav;
 
 	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-	ImGui::Begin("Startup Notice", &startup_notice_active_, flags);
+	ImGui::Begin("Startup Notice", &startup_wnd_, flags);
 
 	ImGui::TextColored(ImVec4(1, 0, 1, 1), "ShieldMod");
 	ImGui::Separator();
@@ -43,4 +49,4 @@ void StartupNotice()
 
 	ImGui::PopStyleVar(1);
 }
-} // namespace cap
+} // namespace shieldmod

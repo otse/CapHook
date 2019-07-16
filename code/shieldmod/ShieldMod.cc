@@ -1,8 +1,12 @@
-// Add the Cap code here.
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
 
 #include <Windows.h>
 
-#include "cap_1.h"
+#include "ShieldMod.h"
 
 //#include <Menu.h>
 
@@ -13,12 +17,12 @@
 
 #include <Utility/PathUtils.h>
 
-namespace cap
+namespace shieldmod
 {
-delta_time_t<float> delta_time_;
+Dt_t<float> delta_time_;
 
-bool cap_active_ = false;
-bool startup_notice_active_ = true;
+bool cap_wnd_ = false;
+bool startup_wnd_ = true;
 
 cap_t Cap_()
 {
@@ -118,7 +122,7 @@ void Cap::Draw()
 
 	ImGui::SetWindowPos(ImVec2(600, 300));
 	ImGui::SetNextWindowSize(ImVec2(600, 300), ImGuiSetCond_FirstUseEver);
-	ImGui::Begin("ShieldMod for ND", &cap_active_, 0);
+	ImGui::Begin("ShieldMod for ND", &cap_wnd_, 0);
 
 	///ImGui::Text("Thanks for playing! ShieldMod is a fork of DawnHook. Press / to toggle menu.\n");
 
@@ -150,9 +154,9 @@ void Cap::Draw()
 		{
 			CAPCONSOLELOG("Reploading banner art");
 
-			cap::CAPUPLOADBANNER(L"pink captain america");
-			cap::CAPUPLOADBANNER(L"pink winter soldier");
-			//cap::CAPUPLOADBANNER(L"pink winter soldier 2");
+			shieldmod::CAPUPLOADBANNER(L"pink captain america");
+			shieldmod::CAPUPLOADBANNER(L"pink winter soldier");
+			//shieldmod::CAPUPLOADBANNER(L"pink winter soldier 2");
 		}
 
 		if (ImGui::Button("Toggle ShieldMod Log"))
@@ -189,4 +193,4 @@ void Cap::Draw()
 	ImGui::End();
 }
 
-} // namespace cap
+} // namespace shieldmod

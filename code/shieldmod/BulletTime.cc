@@ -1,4 +1,10 @@
-#include "cap_1.h"
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
+
+#include "ShieldMod.h"
 
 #include <algorithm>
 
@@ -7,12 +13,10 @@
 #include <ScriptSystem.h>
 #include <Utility/PathUtils.h>
 
-namespace cap
+namespace shieldmod
 {
-// externs
-bool show_hourglass_ = true; // bar
+bool show_hourglass_ = true;
 
-// locals
 bool slow = false;
 float hourglass = 0;
 
@@ -85,33 +89,13 @@ bool show_hourglass = true;
 
 Void Bt_Draw()
 {
-	float fade = 0;
+	float fade = til.Get();
 
-	if (til.in > 0)
-	{
-		til.in -= delta_time_.s / til.in_s;
-		if (til.in <= 1)
-			fade = 1 - til.in;
-		if (til.in <= 0)
-		{
-			til.in = 0;
-			if (til.out_s)
-				til.out = -til.out;
-		}
-	}
-	else if (til.out > 0)
-	{
+	if (-1 == fade && slow)
 		fade = 1;
-		til.out -= delta_time_.s / til.out_s;
-		if (til.out <= 1)
-			fade = til.out;
-		if (til.out <= 0)
-			til.out = 0;
-	}
-	else if (slow)
-	{
-		fade = 1;
-	}
+		
+	else
+		fade = 0;
 
 	if (!fade || !show_hourglass_)
 		return;
@@ -160,4 +144,4 @@ Void Bt_Draw()
 	ImGui::PopStyleVar(3);
 }
 
-} // namespace cap
+} // namespace shieldmod

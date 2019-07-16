@@ -1,4 +1,4 @@
-project "Cap"
+project "ShieldMod"
     language "C++"
     kind "StaticLib"
     

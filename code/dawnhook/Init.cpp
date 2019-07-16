@@ -16,7 +16,7 @@
 #include <MinHook.h>
 
 //Cap
-#include <cap/cap_1.h>
+#include <shieldmod/cap_1.h>
 
 bool IsGameGenuine()
 {
@@ -89,7 +89,7 @@ bool InitMod()
 	g_Menu = new Menu;
 
 	// Cap
-	cap::Cap_();
+	shieldmod::Cap_();
 
 	return true;
 }

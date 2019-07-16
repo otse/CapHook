@@ -1,6 +1,12 @@
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
+
 #pragma once
 
-#include "cap_1.h"
+#include "ShieldMod.h"
 
 #include <Windows.h>
 #include <d3d11.h>
@@ -14,7 +20,7 @@
 
 #include <Utility/PathUtils.h>
 
-namespace cap
+namespace shieldmod
 {
 bool ChrisOrSebastian = false;
 
@@ -293,4 +299,4 @@ void CAPUPLOADBANNER(const wchar_t *pink)
 	}
 }
 
-} // namespace cap
+} // namespace shieldmod

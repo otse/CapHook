@@ -16,7 +16,7 @@
 #include <Menu.h>
 
 // Cap
-#include <cap/cap_1.h>
+#include <shieldmod/cap_1.h>
 
 
 struct D3D_Class
@@ -52,10 +52,10 @@ static bool Initialize(IDXGISwapChain* _SwapChain)
     pBackBuffer->Release();
 
 	// Cap banner
-	cap::CAPSTOREVARS(_SwapChain, d3dDevice, d3dContext, DX11RenderTargetView);
-	cap::CAPUPLOADBANNER(L"pink captain america");
-	cap::CAPUPLOADBANNER(L"pink winter soldier");
-	//cap::CAPUPLOADBANNER(L"pink winter soldier 2");
+	shieldmod::CAPSTOREVARS(_SwapChain, d3dDevice, d3dContext, DX11RenderTargetView);
+	shieldmod::CAPUPLOADBANNER(L"pink captain america");
+	shieldmod::CAPUPLOADBANNER(L"pink winter soldier");
+	//shieldmod::CAPUPLOADBANNER(L"pink winter soldier 2");
 
     return ImGui_ImplDX11_Init(sd.OutputWindow, d3dDevice, d3dContext);
 }
@@ -71,17 +71,17 @@ static HRESULT D3D11Present_Wrap(int64_t* Device3D, int64_t* a2, int64_t* a3)
 
 	// Caps
 	// Todo, logic in render loop?
-	using namespace cap;
+	using namespace shieldmod;
 
 	CAP_DELTA_TIME_SET();
 
-	if (cap_active_)
+	if (cap_wnd_)
 		cap_->Draw();
 
 	if (log_active_)
 		log_->Draw();
 
-	if (startup_notice_active_)
+	if (startup_wnd_)
 		StartupNotice();
 	
 	// bt

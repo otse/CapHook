@@ -1,10 +1,17 @@
-#pragma once
+/*
+ * ShieldMod file
+ * 
+ * Tse Ojeng
+ */
+
+#ifndef shieldmod_log_h
+#define shieldmod_log_h
 
 #include <deque>
 
-#define CAPCONSOLELOG(x) cap::log_->Logg(x)
+#define CAPCONSOLELOG(x) shieldmod::log_->Logg(x)
 
-namespace cap
+namespace shieldmod
 {
 extern bool log_active_;
 
@@ -28,4 +35,6 @@ public:
 	void Logg(const std::string &);
 };
 
-} // namespace cap
+} // namespace shieldmod
+
+#endif
