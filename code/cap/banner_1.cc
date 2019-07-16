@@ -102,7 +102,11 @@ void CAPDRAWBANNER()
 
 	ImGui::PushItemWidth(900);
 
-	bool use = ImGui::SliderFloat("", &x, 0.0f, max);
+	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 1, 0));
+
+	bool use = ImGui::SliderFloat("##water", &x, 0.0f, max);
+
+	ImGui::PopStyleColor(1);
 
 	ImGui::PopItemWidth();
 

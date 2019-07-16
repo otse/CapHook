@@ -33,12 +33,12 @@ void StartupNotice()
 				 ImGuiWindowFlags_NoNav;
 
 	ImGui::SetNextWindowBgAlpha(0.35f); // Transparent background
-	if (ImGui::Begin("Startup Notice", &startup_notice_active_, flags))
-	{
-		ImGui::TextColored(ImVec4(1, 0, 1, 1), "ShieldMod");
-		ImGui::Separator();
-		ImGui::Text("Numpad Slash for mod menu");
-	}
+	ImGui::Begin("Startup Notice", &startup_notice_active_, flags);
+
+	ImGui::TextColored(ImVec4(1, 0, 1, 1), "ShieldMod");
+	ImGui::Separator();
+	ImGui::Text("Numpad Slash for mod menu");
+
 	ImGui::End();
 
 	ImGui::PopStyleVar(1);
