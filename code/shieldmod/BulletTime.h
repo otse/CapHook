@@ -22,14 +22,14 @@ namespace shieldmod
 	Bt BtFrame();
 	Bt BtDraw();
 
-	// bullet time bar fade controller
+	// Bullet Time Bar
 
 	struct Bar;
 	extern Bar bar;
 
 	struct Bar
 	{
-		bool til = false;
+		bool full = false;
 
 		float in = 0;
 		float out = 0;
@@ -49,8 +49,6 @@ namespace shieldmod
 				{
 					fade = 1;
 					in = 0;
-					if (out_s)
-						out = -out;
 				}
 			}
 			else if (out > 0)

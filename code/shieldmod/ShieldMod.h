@@ -10,7 +10,7 @@
 #include "Dt.h"
 #include "Log.h"
 
-#include "fs.h"
+#include "Luas.h"
 #include "BulletTime.h"
 
 #include "Art.h"
@@ -38,7 +38,7 @@ public:
 	Cap();
 	~Cap();
 
-	fs_list_t const _luas;
+	luas_t const _luas;
 
 	void Key(unsigned __int64);
 

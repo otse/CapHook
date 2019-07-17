@@ -13,14 +13,19 @@
 
 #include <Utility/PathUtils.h>
 
-namespace fs
+namespace shieldmod
 {
-List::List(const std::wstring rel)
+luas_t Luas_(const std::wstring rel)
+{
+	return new Luas(rel);
+}
+
+Luas::Luas(const std::wstring rel)
 	: _rel(rel)
 {
 }
 
-void List::Reload()
+void Luas::Reload()
 {
 	_num = 0;
 	_abs.clear();
@@ -44,7 +49,7 @@ void List::Reload()
 			_abs.push_back(path + L"\\" + data.cFileName);
 
 			std::wstring wstr = data.cFileName;
-			
+
 			_dis.push_back(std::string(wstr.begin(), wstr.end()));
 
 		} while (FindNextFileW(handle, &data));
@@ -63,7 +68,7 @@ static bool ScriptItemSelector(void *data, int idx, const char **out_text)
 	return true;
 }
 
-void List::Draw()
+void Luas::Draw()
 {
 	static int current_item = 0;
 
@@ -81,9 +86,4 @@ void List::Draw()
 	}
 }
 
-} // namespace fs
-
-fs_list_t fsList_(const std::wstring rel)
-{
-	return new fs::List(rel);
-}
+} // namespace shielmod

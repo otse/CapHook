@@ -32,7 +32,7 @@ cap_t Cap_()
 cap_t cap_ = nullptr;
 
 Cap::Cap()
-	: _luas(fsList_(L"shieldmod\\luas"))
+	: _luas(Luas_(L"shieldmod\\luas"))
 {
 	auto check = [](const std::wstring &path) {
 		auto abs = Utility::MakeAbsolutePathW(path);

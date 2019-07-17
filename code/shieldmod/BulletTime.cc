@@ -22,9 +22,13 @@ float hourglass = 0;
 
 Bt BtIn()
 {
-	auto path = Utility::MakeAbsolutePathW(L"shieldmod\\luas\\bt_in.lua");
+	//cap_->_luas->_abs[L"shieldmod\\luas\\bt_in.lua"];
 
-	bool result = Lua::RunFile(path.c_str());
+	auto css = CScriptSystem::GetInstance();
+
+    bool result = !css->ExecuteFile("SetSlowMotion(0.5)", 18, nullptr, false);
+
+	//bool result = !CScriptSystem_ExecuteFile(*g_ScriptSystem, data.get(), length, nullptr, false);
 
 	slow = true;
 }
@@ -40,13 +44,21 @@ Bt BtOut()
 
 Bt BtToggle()
 {
+	// Toggle On
 	if (!slow && hourglass > .25f)
 	{
-		slow = true;
-		bar.in_s = bar.in = 1;
-		bar.out_s = 0;
-
+		bar.full = true;
+		bar.in = bar.in_s = 1;
+		bar.out = bar.out_s = 0;
 		BtIn();
+	}
+	// Toggle Off
+	else if (slow)
+	{
+		bar.full = false;
+		bar.in = bar.in_s = 0;
+		bar.out = bar.out_s = 1;
+		BtOut();
 	}
 }
 
@@ -58,24 +70,27 @@ Bt BtFrame()
 
 		if (hourglass <= 0)
 		{
-			BtOut();
-			bar.til = false;
+			// Empty, slow fade out 2s
+			bar.full = false;
 			bar.in = 0;
 			bar.out = 1;
 			bar.out_s = 2;
+			BtOut();
 		}
 	}
 
 	else if (!slow)
 	{
 		hourglass += delta_time_.s / 20;
-		// ALmost recharged
-		if (hourglass >= .9f && !bar.til)
+		// Almost recharged
+		// Fade in 2s, hold 1s, fade out 2s
+		if (hourglass >= .9f && !bar.full)
 		{
-			bar.til = true;
+			bar.full = true;
 			bar.in = 1;
-			bar.out_s = bar.in_s = 2;
-			bar.out = -2;
+			bar.in_s = 2;
+			bar.out = 3;
+			bar.out_s = 1.5;
 		}
 	}
 

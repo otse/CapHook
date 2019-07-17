@@ -4,19 +4,23 @@
  * Tse Ojeng
  */
 
-#ifndef shieldmod_fs_h
-#define shieldmod_fs_h
+#ifndef shieldmod_luas_h
+#define shieldmod_luas_h
 
 #include <string>
 #include <vector>
 
 // Todo, completely nuke this file
 
-namespace fs
+namespace shieldmod
 {
-struct List;
+struct Luas;
 
-struct List
+typedef Luas *luas_t;
+
+luas_t Luas_(const std::wstring);
+
+struct Luas
 {
 	int _num = 0;
 
@@ -25,16 +29,15 @@ struct List
 
 	const std::wstring _rel;
 
-	List(const std::wstring);
+	Luas(const std::wstring);
 
 	void Reload();
 
 	void Draw();
 };
-} // namespace fs
 
-typedef fs::List *fs_list_t;
+} // namespace shieldmod
 
-fs_list_t fsList_(const std::wstring);
+
 
 #endif
