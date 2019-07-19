@@ -66,7 +66,7 @@ Bt BtFrame()
 {
 	if (slow)
 	{
-		hourglass -= delta_time_.s / 5;
+		hourglass -= delta_time_.s / 3;
 
 		if (hourglass <= 0)
 		{
@@ -81,7 +81,7 @@ Bt BtFrame()
 
 	else if (!slow)
 	{
-		hourglass += delta_time_.s / 20;
+		hourglass += delta_time_.s / 25;
 		// Almost recharged
 		// Fade in 2s, hold 1s, fade out 2s
 		if (hourglass >= .9f && !bar.full)
