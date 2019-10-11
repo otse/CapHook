@@ -9,6 +9,7 @@
  */
 
 #include <vector>
+#include <string>
 
 class Menu
 {

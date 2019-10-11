@@ -7,6 +7,7 @@
 #ifndef shieldmod_log_h
 #define shieldmod_log_h
 
+#include <string>
 #include <deque>
 
 #define CAPCONSOLELOG(x) shieldmod::log_->Logg(x)
